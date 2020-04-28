@@ -4,15 +4,11 @@ class CreateReviews < ActiveRecord::Migration[5.2]
       t.integer :vote
       t.text :comment
       t.date :date
-
+      t.references :users
+      t.references :locations
+      
       t.timestamps
     end
   end
   
-  def addRefernces
-    add_column :reviews do |t|
-      t.refernces :user
-      t.refernces :location
-    end
-  end
 end
