@@ -8,10 +8,12 @@ class User < ApplicationRecord
         (?=.*[A-Z]) # Almeno un carattere maiuscolo
         (?=.*[[:^alnum:]]) # Almeno un simbolo
     /x
+
     validates :password, presence: true, format:PASSWORD_REQUIREMENTS
     
-    has_many :favourites, class_name: :Location
-    
+    has_many :fav_locations
+    has_many :favourites, :through => :fav_locations, :source => locations
+
     has_many :friendships  
     has_many :friends, :through => :friendships
 

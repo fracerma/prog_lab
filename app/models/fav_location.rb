@@ -1,0 +1,2 @@
+class FavLocation < ApplicationRecord
+end
