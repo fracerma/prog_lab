@@ -6,7 +6,6 @@
           <th>Nome</th>
           <th>Long</th>
           <th>Lat</th>
-          <th>Categoria</th>
           <th colspan="3"></th>
         </th>
     </thead>
@@ -16,8 +15,14 @@
             <tr>
                 <td><%= loc.name %></td>
                 <td><%= loc.long %></td>
-                <td><%= loc.lat %></td>
+                <td><%= loc.lat %> &nbsp;</td>
+                <td><%= link_to "Show", location_path(loc.id) %>&nbsp;</td>
+                <td><%= link_to "Edit", edit_location_path(loc.id) %>&nbsp;</td>
+                <td><%= link_to "Destroy", loc, method: :delete, data: { confirm: "Are you sure?" } %>&nbsp;</td>
             </tr>
          <% end %>
+
     </tbody>
 </table>
+<br/>
+<%= link_to "New", new_location_path %>

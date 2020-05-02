@@ -3,41 +3,29 @@ class LocationsController < ApplicationController
        @location = Location.all
     end
 
+    def new 
+        @newLoc = Location.new
+    end
+
     def show
-        if Location.exists?(params[:id])
-            @location = Location.find(params[:id])
-            @catId = Type.find(params[:id])
-            @catId.each do |c|
-                @cats += Category.find(c)
-            end
-        else 
-            render html: "Locale non trovato"
-        end
+       redirect_to location_types_path(params[:id])
     end 
 
-    def show_cats
-        if Location.exists?(params[:id])
-            @cats = Type.find(params[:id])
-            render html: @cats.name
-        else 
-            render html: "Locale non trovato"
-        end
-    end 
 
     def create
         if  Location.exists?(params[:id])
-            @location = Location.find(params[:id])
             render html: "Il locale che stai cercando di aggiungere gia' esiste"
             
         else 
             #Manca autenticazione admin
-            @newLoc = Location.create!(params[:movie].permit(:name, :lat, :long))
+            @newLoc = Location.create(params.require(:locations).permit(:name, :lat, :long, :foto))
             redirect_to locations_path  
         end
     end
 
     #Manca autenticazione admin
     def edit 
+        @update_loc = Location.find(params[:id])
     end 
 
     #Manca autenticazione admin
@@ -49,5 +37,8 @@ class LocationsController < ApplicationController
     end
 
     def update
+        @update_loc = Location.find(params[:id])
+        @update_loc.update_attributes(name: params[:locations][:name], lat: params[:locations][:lat], long: params[:locations][:long], foto: params[:locations][:foto])
+        redirect_to location_path(@update_loc)
     end
 end
