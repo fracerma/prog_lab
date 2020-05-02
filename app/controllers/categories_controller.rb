@@ -5,7 +5,7 @@ class CategoriesController < ApplicationController
     end
 
     def create # /categories
-        Category.create!(params[:category].permit(:name))
+        @category = Category.create(params.require(:categories).permit(:name))
         redirect_to categories_path
     end 
 
@@ -13,25 +13,18 @@ class CategoriesController < ApplicationController
         @category = Category.new
     end 
 
+    # con la show voglio mostrare la lista di tutti i locali che hanno come proprietà quella categoria
+    def show  # /categories/:id
+        render html: 'in corso'
+    end
+
     # modifica (da parte di chi?) una categoria id
     def edit  # /categories/:id/edit
-        id = params[:id]
-        @category = Category.find(id)
-    end
-    
-    # mostra una certa categoria id 
-    def show  # /categories/:id
-        id = params[:id]
-        if Category.exists?(id)
-            @category = Category.find(id)
-        else
-            render html: 'Movie does not exit'
-        end
+        @category = Category.find(params[:id])
     end
 
     # questo metodo viene chiamato dopo il metodo #edit:
-    # quando qualcuno modifica una categoria e vuole 
-    # aggiornare le modifiche nel database 
+    # quando qualcuno modifica una categoria e vuole aggiornare le modifiche nel database 
     def update  # /categories/:id
         id = params[:id]
         @category = Category.find(id)

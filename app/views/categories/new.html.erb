@@ -1,0 +1,14 @@
+<br>
+<h1> Crea una nuova categoria: </h1>
+<br>
+<%= form_tag :action => 'create' do %>
+
+<p><label for = "name">Nome categoria</label>:
+<%= text_field 'categories', 'name' %></p>
+
+
+
+
+<%= submit_tag "Crea" %>
+
+<% end -%>
