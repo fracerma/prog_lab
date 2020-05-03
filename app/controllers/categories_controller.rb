@@ -16,6 +16,14 @@ class CategoriesController < ApplicationController
     # con la show voglio mostrare la lista di tutti i locali che hanno come proprietà quella categoria
     def show  # /categories/:id
         render html: 'in corso'
+        @category = Category.find(params[:id])
+        @listlocations = Array.new(20);
+        # come prendo la lista delle locations? 
+        @locations.each do |l| 
+            if l.category == @category
+            @listlocations.puts(l.category)
+            end
+        end
     end
 
     # modifica (da parte di chi?) una categoria id
@@ -29,7 +37,7 @@ class CategoriesController < ApplicationController
         id = params[:id]
         @category = Category.find(id)
         @category.update_attributes!(params[:category].permit(:name))
-		redirect_to category_path(@category)
+		redirect_to categories_path
     end
 
     # elimina la categoria id

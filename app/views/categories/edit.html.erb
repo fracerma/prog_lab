@@ -1,7 +1,12 @@
-<h1> Modifica la categoria <h1>
-<% form_tag category_path(@category), :method => :put do %>
-    
-    <%= label_tag :category, :name %>
-    <%= text_field :category, :name %>
-    <% end %>
-    <% submit_tag 'Salva' %>
+<br>
+<h1> Modifica nome di una categoria:</h1>
+<br>
+
+<%= form_for @category, :url => {:action => "update", :id => @category} do |c| %>
+
+<p> Nuovo nome categoria: <%= c.text_field 'name' %></p>
+
+<%= submit_tag "Modifica" %>
+<% end %>
+
+<%= link_to 'Back', {:action => 'index' } %>
