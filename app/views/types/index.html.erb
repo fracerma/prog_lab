@@ -1,0 +1,24 @@
+<h1>Locale:</h1>
+
+<table>
+    <thead>
+        <tr>
+          <th>Nome &nbsp;</th>
+          <th>Categoria</th>
+          <th colspan="3"></th>
+        </th>
+    </thead>
+
+    <tbody>
+            <tr>
+                <td><%= @location.name %>&nbsp;</td>
+                <% @cats.each do |c| %>
+                    <td>&nbsp;<%= c[0]  %></td>
+                <% end %>
+            </tr>
+         
+    </tbody>
+</table>
+
+
+<%= link_to "Home Locations", locations_path %>

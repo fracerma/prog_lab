@@ -1,0 +1,27 @@
+
+<h1> Here the list of all the categories :) </h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Categories</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+ 
+  <tbody>
+    <% @categories.each do |category| %>
+      <tr>
+        <td><%= category.name %> &nbsp;</td>
+        <td><%= link_to "Show", category %>&nbsp; </td>
+        <td><%= link_to "Edit", edit_category_path(category) %>&nbsp; </td>
+        <td><%= link_to "Destroy", category, method: :delete, data: { confirm: "Are you sure?" } %></td>
+        <td> <hr> </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+ 
+<br>
+ 
+<%= link_to "New category", new_category_path %>
