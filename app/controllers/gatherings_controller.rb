@@ -13,8 +13,10 @@ class GatheringsController < ApplicationController
         @gathering=Gathering.new(params.require(:gathering).permit(:date))
         @gathering.users << @current_user
         @gathering.location = Location.find(1)
-        params[:partecipants].each do |partecipant|
-            @gathering.users << User.find(partecipant)
+        if(params[:partecipants])
+            params[:partecipants].each do |partecipant|
+                @gathering.users << User.find(partecipant)
+            end
         end
         @gathering.save
         redirect_to gatherings_path
