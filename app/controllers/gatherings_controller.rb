@@ -10,8 +10,13 @@ class GatheringsController < ApplicationController
     end
 
     def create 
-        #TODO aggiungi elementi al database
-        #@gathering=Gathering.create!(params.require(:gathering).permit(:date,:users,:location))
+        @gathering=Gathering.new(params.require(:gathering).permit(:date))
+        @gathering.users << @current_user
+        @gathering.location = Location.find(1)
+        params[:partecipants].each do |partecipant|
+            @gathering.users << User.find(partecipant)
+        end
+        @gathering.save
         redirect_to gatherings_path
     end 
 
@@ -32,8 +37,17 @@ class GatheringsController < ApplicationController
     def update  
         id = params[:id]
         @gathering = Gathering.find(id)
-        #TODO aggiorna database con le modifiche
-        #@gathering.update_attributes!(params[:gathering].permit(:date,:users,:location))
+        if(params[:adduser])
+            params[:adduser].each do |user|
+                @gathering.users << User.find(user)
+            end
+        end
+        if(params[:deleteuser])
+            params[:deleteuser].each do |user|
+                @gathering.users.delete(User.find(user))
+            end
+        end
+        @gathering.update_attributes!(params[:gathering].permit(:date))
 		redirect_to gathering_path(@gathering)
     end
 
