@@ -1,0 +1,26 @@
+<h1> THIS IS THE GATHERING <%= @gathering.id %> <h1>
+
+<p>
+    <h5> LOCATION: <h5> 
+    <%= @gathering.location.name %>
+</p>
+<br>
+<p>
+    <h5> DATE: <h5>
+    <%= @gathering.date %>
+</p>
+<br>
+<p>
+    <h5> ALL PARTECIPANTS: <h5>
+    <% @gathering.users.each do |user| %>
+        <%= user.name %>
+    <% end %>
+</p>
+<br>
+<br>
+<br>
+<%= link_to "Edit", edit_gathering_path(@gathering) %>
+<br>
+<%= link_to "Destroy", gathering_path(@gathering), method: :delete, data: { confirm: "Are you sure?" } %>
+<br>
+<%= button_to "GoBack",  gatherings_path %>

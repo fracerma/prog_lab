@@ -37,12 +37,5 @@ class UsersController < ApplicationController
         redirect_to root_path
     end
 
-    private
 
-    def is_logged
-        if(!@current_user)
-            redirect_to login_path
-        end
-
-    end
 end
