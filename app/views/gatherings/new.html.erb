@@ -1,0 +1,31 @@
+
+<h1> Create a new gathering </h1>
+<br>
+
+<%= form_tag :action => 'create' do %>
+    <p>
+        <h5> CHOOSE THE DATE: <h5>
+        <input type="date" placeholder="insert the date " required>
+    </p>
+
+    <br>
+
+    <p>
+        <h5> CHOOSE WHO YOU WANT TO INVITE: <h5>
+        <% @current_user.friends.each do |friend| %>
+            <input type="checkbox" name="amico"> <%=friend.name%>
+        <% end %>
+    </p>
+
+    <br>
+
+    <p>
+        <h5> CHOOSE THE LOCATION: <h5>
+         <%= link_to "Generate matching locations", gatherings_new_generate_locations_path %>
+    </p>
+
+    <p>
+        <%= submit_tag "Create" %>
+    </p>
+<% end -%>
+<%= button_to "GoBack",  gatherings_path %>

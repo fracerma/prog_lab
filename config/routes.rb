@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   resources :categories
   resources :gatherings
 
+  #pagina delle locations che vanno bene per tutti gli invitati
+  get '/gatherings/new/generate_locations', to: 'gatherings#generate_locations'
 
 end
 
