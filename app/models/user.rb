@@ -1,6 +1,6 @@
 class User < ApplicationRecord
     has_secure_password
-    validates :email, presence: true
+    validates :email, presence: true, uniqueness: true
 
     PASSWORD_REQUIREMENTS= /\A
         (?=.{8,}) # Almeno 8 caratteri
@@ -9,10 +9,10 @@ class User < ApplicationRecord
         (?=.*[[:^alnum:]]) # Almeno un simbolo
     /x
 
-    validates :password, presence: true, format:PASSWORD_REQUIREMENTS
+    validates :password, presence: true, format:PASSWORD_REQUIREMENTS, :if => :password
     
     has_many :fav_locations
-    has_many :favourites, :through => :fav_locations, :source => locations
+    has_many :locations, :through => :fav_locations
 
     has_many :friendships  
     has_many :friends, :through => :friendships

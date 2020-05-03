@@ -1,0 +1,8 @@
+<h1>Register</h1>
+<p id=”alert”><%= alert %></p>
+<%= form_with model: @user do |f| %>
+  Nome: <%= f.text_field :name %>
+  Email: <%= f.email_field :email %>
+  Password: <%= f.password_field :password %>
+  <%= f.submit "Create" %>
+<% end %>
