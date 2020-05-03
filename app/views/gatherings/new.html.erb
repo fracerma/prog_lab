@@ -1,11 +1,10 @@
-
-<h1> Create a new gathering </h1>
+<h1> CREATE A NEW GATHERING </h1>
 <br>
 
 <%= form_tag :action => 'create' do %>
     <p>
         <h5> CHOOSE THE DATE: <h5>
-        <input type="date" placeholder="insert the date " required>
+        <%= date_field :gathering, :date, :required => true%>
     </p>
 
     <br>
@@ -13,7 +12,8 @@
     <p>
         <h5> CHOOSE WHO YOU WANT TO INVITE: <h5>
         <% @current_user.friends.each do |friend| %>
-            <input type="checkbox" name="amico"> <%=friend.name%>
+            <%= check_box_tag 'partecipants[]', friend.id -%>
+            <%= friend.name -%>
         <% end %>
     </p>
 
@@ -28,4 +28,6 @@
         <%= submit_tag "Create" %>
     </p>
 <% end -%>
-<%= button_to "GoBack",  gatherings_path %>
+<%= link_to gatherings_path do %>
+   <button> GoBack </button>
+<% end %>
