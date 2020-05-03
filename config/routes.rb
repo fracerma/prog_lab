@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   end
 
   resources :categories
+  resources :gatherings
+
 
 end
 
