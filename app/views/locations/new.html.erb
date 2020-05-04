@@ -1,0 +1,22 @@
+<h1>Aggiungi un locale</h1>
+
+<%= form_tag :action => 'create' do %>
+<p><label for="name">Nome locale:</label>
+
+<%= text_field 'locations', 'name' %></p>
+<p><label for = "long">Longitutine</label>:
+
+<%= text_field 'locations', 'long' %></p>
+<p><label for = "lat">Latitudine</label>:
+
+<%= text_field 'locations', 'lat' %></p>
+
+<p><label for = "lat">Link Foto</label>:
+
+<%= text_field 'locations', 'foto' %></p>
+
+
+
+<%= submit_tag "Create" %>
+
+<% end -%>

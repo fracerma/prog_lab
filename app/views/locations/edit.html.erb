@@ -1,0 +1,25 @@
+<h1>Modifica un locale</h1>
+
+<%= form_tag :location, :url => {:action => 'update', :id => @update_loc.id},
+  :method => 'put' do %>
+<p><label for="name">Nome locale:</label>
+
+<%= text_field 'locations', 'name' , value: @update_loc.name%></p>
+<p><label for = "long">Longitutine</label>:
+
+<%= text_field 'locations', 'long', value: @update_loc.long %></p>
+<p><label for = "lat">Latitudine</label>:
+
+<%= text_field 'locations', 'lat' , value: @update_loc.lat %></p>
+
+<p><label for = "lat">Link Foto</label>:
+
+<%= text_field 'locations', 'foto',  value: @update_loc.foto %></p>
+
+
+
+<%= submit_tag "Update" %>
+
+<% end -%>
+<br/>
+<%= link_to "Home Locations", locations_path %>
