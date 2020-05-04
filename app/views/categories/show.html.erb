@@ -1,0 +1,11 @@
+<h1>Nome categoria: &nbsp; <%= @current_category.name %> </h1>
+<br>
+<h2> Lista di locali che hanno questa categoria: </h2>
+
+<% @locs.each do |loc| %>
+    <%= loc[0] %>
+    <br>
+    <% end %>
+<br>
+
+<%= link_to 'Back', {:action => 'index' } %>

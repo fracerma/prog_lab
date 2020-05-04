@@ -15,15 +15,12 @@ class CategoriesController < ApplicationController
 
     # con la show voglio mostrare la lista di tutti i locali che hanno come proprietà quella categoria
     def show  # /categories/:id
-        render html: 'in corso'
-        @category = Category.find(params[:id])
-        @listlocations = Array.new(20);
-        # come prendo la lista delle locations? 
-        @locations.each do |l| 
-            if l.category == @category
-            @listlocations.puts(l.category)
+        @current_category = Category.find(params[:id])
+            @tupla = Type.where(category_id: @current_category.id).pluck(:location_id)
+            @locs = []
+            @tupla.each do |l|
+                @locs.append(Location.where(id: l).pluck(:name))
             end
-        end
     end
 
     # modifica (da parte di chi?) una categoria id
@@ -31,7 +28,9 @@ class CategoriesController < ApplicationController
         @category = Category.find(params[:id])
     end
 
-    # questo metodo viene chiamato dopo il metodo #edit:
+    # questo metodo viene chiamato dopo il metodo #
+
+
     # quando qualcuno modifica una categoria e vuole aggiornare le modifiche nel database 
     def update  # /categories/:id
         id = params[:id]
