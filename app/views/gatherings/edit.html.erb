@@ -1,0 +1,34 @@
+<h1> CHANGE SOMETHING ABOUT  GATHERING <%= @gathering.id %> <h1>
+
+<%= form_tag gathering_path(@gathering), :method => :put do %>
+    <p>
+    
+        <h5> CHANGE THE DATE: <h5>
+        <%= date_field(:gathering, :date) %>
+
+        <h5> ADD A FRIEND:<h5>
+        <% @current_user.friends.each do |friend| %>
+            <% if (!@gathering.users.include?(friend)) %> 
+                <%= check_box_tag 'adduser[]', friend.id -%>
+            <%= friend.name -%>
+            <% end %> 
+        <% end %> 
+
+        <h5> DELETE A FRIEND:<h5>
+        <% @gathering.users.each do |user| %>
+            <%= check_box_tag 'deleteuser[]', user.id -%>
+            <%= user.name -%>
+            <br>
+        <% end %> 
+
+        <h5> CHOOSE ANOTHER LOCATION:<h5>
+        <%= link_to "Generate matching locations", gatherings_new_generate_locations_path %>
+   </p>
+    <%= submit_tag "Save" %>
+
+<% end %>
+<br>
+
+<%= link_to gatherings_path do %>
+   <button> GoBack </button>
+<% end %>

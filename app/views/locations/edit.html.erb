@@ -16,6 +16,22 @@
 
 <%= text_field 'locations', 'foto',  value: @update_loc.foto %></p>
 
+<p><label>Categoria</label>
+<ul>
+  <% @categories.each do |cat| %>
+      <li>
+        <% if @cats.include? cat %>
+          <%= check_box_tag 'categ[]', cat.id, true %>
+          <%=  cat.name %>
+        <% else %>
+          <%= check_box_tag 'categ[]', cat.id %>
+          <%=  cat.name %>
+        <% end %>
+        
+      </li>
+  <% end %>
+</ul>
+
 
 
 <%= submit_tag "Update" %>

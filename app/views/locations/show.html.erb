@@ -1,0 +1,11 @@
+<h1>Locale:&nbsp;<%= @location.name %></h1>
+
+<br/>
+<p>Categorie:<% @cats.each do |c| %>
+            &nbsp;<%= c.name %>
+            <% end %>
+</p>
+<br/>
+            
+
+<%= link_to "Home Locations", locations_path %>

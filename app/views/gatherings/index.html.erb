@@ -1,0 +1,27 @@
+
+<h1> THESE ARE ALL YOUR GATHERINGS </h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+ 
+  <tbody>
+    <% @gatherings.each do |gathering| %>
+      <tr>
+        <td><%= gathering.id %>  &nbsp;</td>
+        <td><%= link_to "Show", gathering_path(gathering)  %>  &nbsp; </td>
+        <td><%= link_to "Edit", edit_gathering_path(gathering) %>  &nbsp; </td>
+        <td><%= link_to "Destroy", gathering_path(gathering), method: :delete, data: { confirm: "Are you sure?" } %></td>
+        
+        <td> <hr> </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+ 
+<br>
+ 
+<%= link_to "New gathering", new_gathering_path %>

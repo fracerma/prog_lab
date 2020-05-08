@@ -1,10 +1,5 @@
 class ApplicationController < ActionController::Base
    before_action :current_user
-
-  def isAdmin
-    return @current_user.admin
-  end
-
    private
    def current_user
     if session[:user_id]
