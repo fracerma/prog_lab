@@ -46,7 +46,8 @@ class LocationsController < ApplicationController
     #che il locale indicato non gli appartiene e quindi aggiungi la tupla. 
     def edit 
         @update_loc = Location.find(params[:id])
-        @catId = Type.find(params[:id])
+        @cats = @update_loc.categories
+        @categories = Category.all
     end 
 
     #Manca autenticazione admin
@@ -59,8 +60,15 @@ class LocationsController < ApplicationController
 
     #Manca autenticazione admin
     def update
-        #@update_loc = Location.find(params[:id])
+        @update_loc = Location.find(params[:id])
         @update_loc.update_attributes(name: params[:locations][:name], lat: params[:locations][:lat], long: params[:locations][:long], foto: params[:locations][:foto])
+        @allCats = params[:categ]
+        @tmp = []
+        @allCats.each do |c|
+                @tmp.append(Category.find(c))
+            end
+            
+        @update_loc.categories = @tmp
         redirect_to location_path(@update_loc)
     end
 end
