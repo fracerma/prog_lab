@@ -1,9 +1,9 @@
-<h1>Nome categoria: &nbsp; <%= @current_category.name %> </h1>
+<h1>NOME CATEGORIA: &nbsp; <%= @current_category.name %> </h1>
 <br>
 <h2> Lista di locali che hanno questa categoria: </h2>
 
 <% @locs.each do |loc| %>
-    <%= loc[0] %>
+    <%= loc.name %>
     <br>
     <% end %>
 <br>
