@@ -17,12 +17,14 @@ class LocationsController < ApplicationController
         @location.categories.each do |c|
             @cats.append(Category.find(c.id))
         end
-    end
+
+    end 
 
     #Manca autenticazione admin
     def create
         if  !Location.where(name: params[:locations][:name]).empty?
-            render html: "Il locale che stai cercango di aggiungere gia' esiste" 
+            render html: "Il locale che stai cercango di aggiungere gia' esiste"
+            
         else 
             #Controlla che  il locale inserito non esista gia'DA FARE
             @newLoc = Location.create!(params.require(:locations).permit(:name, :lat, :long, :foto))
