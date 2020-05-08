@@ -14,7 +14,12 @@ class ApplicationController < ActionController::Base
     if(!@current_user)
       redirect_to login_path
     end
+  end
 
+  def is_admin
+    if(!@current_user.admin)
+        redirect_to root_path
+    end
   end
 
 

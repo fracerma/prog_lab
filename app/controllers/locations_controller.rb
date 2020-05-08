@@ -1,5 +1,7 @@
 class LocationsController < ApplicationController
     before_action :is_logged
+    before_action :is_admin, except: [:index, :new, :create, :show] 
+    
     skip_before_action :verify_authenticity_token
 
     def index
