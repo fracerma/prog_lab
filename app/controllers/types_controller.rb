@@ -25,12 +25,6 @@ class TypesController < ApplicationController
      end 
  
      def show_cats
-         if Location.exists?(params[:id])
-             @cats = Type.find(params[:id])
-             render html: @cats.name
-         else 
-             render html: "Locale non trovato"
-         end
      end 
  
      def create

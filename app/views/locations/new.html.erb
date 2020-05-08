@@ -3,19 +3,27 @@
 <%= form_tag :action => 'create' do %>
 <p><label for="name">Nome locale:</label>
 
-<%= text_field 'locations', 'name' %></p>
+<%= text_field 'locations', 'name', required: true%></p>
 <p><label for = "long">Longitutine</label>:
 
-<%= text_field 'locations', 'long' %></p>
+<%= text_field 'locations', 'long', required: true%></p>
 <p><label for = "lat">Latitudine</label>:
 
-<%= text_field 'locations', 'lat' %></p>
+<%= text_field 'locations', 'lat' , required: true%></p>
 
-<p><label for = "lat">Link Foto</label>:
+<p><label for = "foto">Link Foto</label>:
 
 <%= text_field 'locations', 'foto' %></p>
 
-
+<p><label for = 'cat'>Categoria</label>
+<ul>
+  <% @categories.each do |cat| %>
+      <li>
+        <%= check_box_tag 'categ[]', cat.id -%>
+        <%=  cat.name -%>
+      </li>
+  <% end %>
+</ul>
 
 <%= submit_tag "Create" %>
 
