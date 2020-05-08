@@ -16,11 +16,7 @@ class CategoriesController < ApplicationController
     # con la show voglio mostrare la lista di tutti i locali che hanno come proprietà quella categoria
     def show  # /categories/:id
         @current_category = Category.find(params[:id])
-            @tupla = Type.where(category_id: @current_category.id).pluck(:location_id)
-            @locs = []
-            @tupla.each do |l|
-                @locs.append(Location.where(id: l).pluck(:name))
-            end
+        @locs = @current_category.locations
     end
 
     # modifica (da parte di chi?) una categoria id
@@ -29,8 +25,6 @@ class CategoriesController < ApplicationController
     end
 
     # questo metodo viene chiamato dopo il metodo #
-
-
     # quando qualcuno modifica una categoria e vuole aggiornare le modifiche nel database 
     def update  # /categories/:id
         id = params[:id]
