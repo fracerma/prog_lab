@@ -22,8 +22,8 @@ class LocationsController < ApplicationController
 
     #Manca autenticazione admin
     def create
-        if  Location.exists?(params[:id])
-            render html: "Il locale che stai cercando di aggiungere gia' esiste"
+        if  !Location.where(name: params[:locations][:name]).empty?
+            render html: "Il locale che stai cercango di aggiungere gia' esiste"
             
         else 
             #Controlla che  il locale inserito non esista gia'DA FARE
@@ -52,7 +52,7 @@ class LocationsController < ApplicationController
     #Manca autenticazione admin
     def destroy 
         id = params[:id]
-        @location = Location.find(id)
+        @location = Location.find(id)      
         @location.destroy
         redirect_to locations_path
     end
