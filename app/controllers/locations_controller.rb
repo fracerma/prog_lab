@@ -1,6 +1,6 @@
 class LocationsController < ApplicationController
     before_action :is_logged
-    skip_before_action :verify_authenticity_token
+    
 
     def index
        @location = Location.all
