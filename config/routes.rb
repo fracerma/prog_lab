@@ -19,8 +19,9 @@ Rails.application.routes.draw do
   resources :categories
   resources :gatherings
 
-  #pagina delle locations che vanno bene per tutti gli invitati
-  get '/gatherings/new/generate_locations', to: 'gatherings#generate_locations'
+  #generazione e modifica della location
+  post '/gatherings/new/generate_locations', to: 'gatherings#generate_locations'
+  post '/gatherings/edit/update_location', to: 'gatherings#update_location'
 
 end
 

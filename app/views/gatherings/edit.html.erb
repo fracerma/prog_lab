@@ -1,6 +1,6 @@
 <h1> CHANGE SOMETHING ABOUT  GATHERING <%= @gathering.id %> <h1>
 
-<%= form_tag gathering_path(@gathering), :method => :put do %>
+<%= form_tag :action => 'update_location' do %>
     <p>
     
         <h5> CHANGE THE DATE: <h5>
@@ -22,9 +22,9 @@
         <% end %> 
 
         <h5> CHOOSE ANOTHER LOCATION:<h5>
-        <%= link_to "Generate matching locations", gatherings_new_generate_locations_path %>
-   </p>
-    <%= submit_tag "Save" %>
+        <%= hidden_field_tag "id", @gathering.id %>
+        <%= submit_tag "Change location"%>
+   
 
 <% end %>
 <br>

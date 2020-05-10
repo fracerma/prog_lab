@@ -1,5 +1,5 @@
 <h1> THESE ARE ALL LOCATIONS MATCHING WITH PARTECIPANTS </h1>
-<%= form_tag gatherings_path(), method: 'POST' do %>
+<%= form_tag gathering_path(@gathering.id), method: 'PUT' do %>
     <table>
     <thead>
         <tr>
@@ -15,7 +15,6 @@
             <td><%= check_box_tag 'location', loc.id -%> </td>
 
             <%= hidden_field_tag  :date, @date %>
-            
             <% @partecipants.each do |part| %>
                 <%= hidden_field_tag "partecipants[]", part %>
             <% end %> 
