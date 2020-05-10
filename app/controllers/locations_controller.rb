@@ -9,6 +9,8 @@ class LocationsController < ApplicationController
     def new 
         @newLoc = Location.new
         @categories = Category.all
+        @noCats = "Non ci sono categorie disponibili"
+            
     end
 
     def show
@@ -29,12 +31,13 @@ class LocationsController < ApplicationController
             #Controlla che  il locale inserito non esista gia'DA FARE
             @newLoc = Location.create!(params.require(:locations).permit(:name, :lat, :long, :foto))
             @array = params[:categ]
-            @arr = []
-            @array.each do |c|
-                @arr.append(Category.find(c))
+            if @array != nil
+                @arr = []
+                @array.each do |c|
+                    @arr.append(Category.find(c))
+                end
+                @newLoc.categories = @arr
             end
-            
-            @newLoc.categories = @arr
             
             redirect_to locations_path  
         end
