@@ -14,18 +14,21 @@
             <% end %> 
         <% end %> 
 
-        <h5> DELETE A FRIEND:<h5>
+        <h5> DELETE PARTECIPANTS:<h5>
         <% @gathering.users.each do |user| %>
-            <%= check_box_tag 'deleteuser[]', user.id -%>
-            <%= user.name -%>
+                <%= check_box_tag 'deleteuser[]', user.id -%>
+                <% if user != @current_user%>
+                    <%= user.name -%>
+                <%else%>
+                    You
+                <% end  %>
             <br>
         <% end %> 
+    
 
-        <h5> CHOOSE ANOTHER LOCATION:<h5>
-        <%= hidden_field_tag "id", @gathering.id %>
-        <%= submit_tag "Change location"%>
-   
-
+    <h5> EDIT YOUR PARTY:<h5>
+    <%= hidden_field_tag "id", @gathering.id %>
+    <%= submit_tag "Edit party"%>
 <% end %>
 <br>
 

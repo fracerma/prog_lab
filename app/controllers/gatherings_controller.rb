@@ -13,14 +13,13 @@ class GatheringsController < ApplicationController
         @gathering=Gathering.new(date: params[:date])
         params[:partecipants].each do |part|
             @gathering.users << User.find(part)
-        end  
+        end 
         @gathering.location = Location.find(params[:location])
         @gathering.save
         redirect_to gatherings_path
     end 
 
     def new
-        @gathering = Gathering.new
     end 
 
     # voglio mostare le info di una singola uscita
@@ -33,10 +32,11 @@ class GatheringsController < ApplicationController
         @gathering = Gathering.find(params[:id])
     end
 
-    def update  
+    def update
+        @location = Location.find(params[:location])
         @gathering=Gathering.find(params[:id])
         @gathering.update_attributes!(date: params[:date])
-        @gathering.location = Location.find(params[:location])
+        @gathering.update_attributes!(location: @location)
 		redirect_to gathering_path(@gathering)
     end
 
@@ -49,7 +49,7 @@ class GatheringsController < ApplicationController
     end 
 
 #metodo che genera le location per un gathering da creare
-    def generate_locations()
+    def generate_locations
         @matching_loc = []
         index=0
         @partecipants = params[:partecipants]
@@ -59,21 +59,18 @@ class GatheringsController < ApplicationController
             @partecipants = []
             puts @partecipants[0] = @current_user.id
         end
-        @locations = Location.all
-        if(@partecipants)
-            @matching_loc = search_match(@partecipants)
-            @date = params[:gathering][:date]
-        else
-            @matching_loc = @locations
-            @date = params[:gathering][:date]
-        end
+        @locations = Location.all #fra chiede: PERCHé?
+        @matching_loc = search_match(@partecipants)
+        @date = params[:date]
     end 
 
-    def update_location()
+    def update_location
         @gathering = Gathering.find(params[:id])
         if(params[:adduser])
             params[:adduser].each do |user|
-                @gathering.users << User.find(user)
+                if(!(@gathering.users.include?(user)))
+                    @gathering.users << User.find(user)
+                end
             end
         end
         if(params[:deleteuser])
@@ -87,15 +84,13 @@ class GatheringsController < ApplicationController
             puts @partecipants[index] = part.id
             index+=1
         end
-        @locations = Location.all
-        if(@partecipants)
+        if (@partecipants.length ==0 )
+            destroy()
+        else
+            @locations = Location.all
             @matching_loc = search_match(@partecipants)
             @date =  params[:gathering][:date]
-        else
-            @matching_loc = @locations
-            @date = params[:gathering][:date]
         end
-
     end
 
 #metodo che dato un gruppo di utenti, seleziona tra i locali quelli che matchano con quegli utenti
