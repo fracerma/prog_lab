@@ -12,17 +12,15 @@
         <tr>
             <td><%= loc.name %>  &nbsp;</td>
             <td><%= link_to "showlocation", location_path(loc) %> &nbsp;</td>
-            <td><%= check_box_tag 'location', loc.id -%> </td>
-
-            <%= hidden_field_tag  :date, @date %>
-            
-            <% @partecipants.each do |part| %>
-                <%= hidden_field_tag "partecipants[]", part %>
-            <% end %> 
+            <td><%= check_box_tag 'location', loc.id-%> </td>
         </tr>
         <% end %>
     </tbody>
     </table>
+    <%= hidden_field_tag  :date, @date %>
+    <% @partecipants.each do |part| %>
+        <%= hidden_field_tag "partecipants[]", part %>
+    <% end %> 
     <p>
         <%= submit_tag "Continue"%>
     <p>
