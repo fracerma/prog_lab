@@ -14,9 +14,5 @@ class ApplicationController < ActionController::Base
     if(!@current_user)
       redirect_to login_path
     end
-
   end
-
-
-
 end

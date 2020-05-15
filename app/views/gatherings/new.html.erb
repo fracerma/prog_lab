@@ -1,10 +1,10 @@
 <h1> CREATE A NEW GATHERING </h1>
 <br>
 
-<%= form_tag :action => 'create' do %>
+<%= form_tag :action => 'generate_locations' do %>
     <p>
         <h5> CHOOSE THE DATE: <h5>
-        <%= date_field :gathering, :date, :required => true%>
+        <%= date_field  :date, :required => true%>
     </p>
 
     <br>
@@ -21,13 +21,10 @@
 
     <p>
         <h5> CHOOSE THE LOCATION: <h5>
-         <%= link_to "Generate matching locations", gatherings_new_generate_locations_path %>
-    </p>
-
-    <p>
-        <%= submit_tag "Create" %>
+         <%= submit_tag "Generate matching locations"%>
     </p>
 <% end -%>
+
 <%= link_to gatherings_path do %>
    <button> GoBack </button>
 <% end %>

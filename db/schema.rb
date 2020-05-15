@@ -78,19 +78,17 @@ ActiveRecord::Schema.define(version: 2020_05_08_180419) do
     t.integer "vote"
     t.text "comment"
     t.date "date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.bigint "users_id"
     t.bigint "locations_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["locations_id"], name: "index_reviews_on_locations_id"
     t.index ["users_id"], name: "index_reviews_on_users_id"
   end
 
   create_table "types", force: :cascade do |t|
-    t.bigint "location_id"
     t.bigint "category_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.bigint "location_id"
     t.index ["category_id"], name: "index_types_on_category_id"
     t.index ["location_id"], name: "index_types_on_location_id"
   end
@@ -106,6 +104,4 @@ ActiveRecord::Schema.define(version: 2020_05_08_180419) do
   end
 
   add_foreign_key "friendships", "users"
-  add_foreign_key "reviews", "locations", column: "locations_id"
-  add_foreign_key "reviews", "users", column: "users_id"
 end
