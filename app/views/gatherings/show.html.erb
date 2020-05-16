@@ -7,14 +7,19 @@
 <br>
 <p>
     <h5> DATE: <h5>
-    <%= @gathering.date %>
+    <%= @gathering.date.strftime("%Y-%m-%d") %>
 </p>
 <br>
 <p>
     <h5> ALL PARTECIPANTS: <h5>
     <% @gathering.users.each do |user| %>
-        <%= user.name %>
-        <br>
+        <% if user != @current_user%>
+            <%= user.name %>
+            <br>
+        <%else %>
+            You
+            <br>
+        <% end  %>
     <% end %>
 </p>
 <br>

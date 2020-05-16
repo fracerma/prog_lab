@@ -12,7 +12,10 @@ class User < ApplicationRecord
     validates :password, presence: true, format:PASSWORD_REQUIREMENTS, :if => :password
     
     has_many :fav_locations
-    has_many :locations, :through => :fav_locations
+    has_many :locations, :through => :fav_locations, :dependent => :destroy
+
+    has_many :fav_categories
+    has_many :categories, :through => :fav_categories, :dependent => :destroy
 
     has_many :friendships  
     has_many :friends, :through => :friendships
