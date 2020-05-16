@@ -18,6 +18,7 @@
 
 <p><label>Categoria</label>
 <ul>
+<%if !@categories.empty?%>
   <% @categories.each do |cat| %>
       <li>
         <% if @cats.include? cat %>
@@ -27,10 +28,13 @@
           <%= check_box_tag 'categ[]', cat.id %>
           <%=  cat.name %>
         <% end %>
-        
       </li>
   <% end %>
 </ul>
+
+<%else%>
+<h3>Non vi sono categorie</h3>
+<%end%>
 
 
 
@@ -39,3 +43,7 @@
 <% end -%>
 <br/>
 <%= link_to "Home Locations", locations_path %>
+<br/>
+<% if $admin %>
+<%= link_to "Home Locations Admin", index_admin_path %>
+<%end%>

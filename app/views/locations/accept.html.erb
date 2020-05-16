@@ -1,0 +1,25 @@
+<h1>Accetta i locali in sospeso</h1>
+<h3>I locali non selezionati verranno marcati come rejected di default</h3>
+<%= form_tag '/accept', :action => 'accept_locations', :method =>'POST' do %>
+<ul>
+  <% if !@list.empty? %>
+    <% @list.each do |el| %>
+        <li>
+          <%= check_box_tag 'accepted[]', el.id -%>
+          <%=  el.name -%>
+        </li>
+        <%= submit_tag "Conferma" %>
+    <% end %>
+  <% else %>
+    <br/>
+    <%= @noList %>
+    <br/>
+    <%= link_to "Home Locations", locations_path %>
+    <br/>
+    <%= link_to "Home Locations Admin", index_admin_path %>
+  <%end%>
+</ul>
+
+
+<% end -%>
+
