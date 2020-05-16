@@ -22,7 +22,7 @@ class LocationsController < ApplicationController
     end
 
     def show
-        if $admin == true  
+        if $admin  
             @location = Location.find(params[:id])
         else 
             @location = Location.where(status: "accepted", id: params[:id])[0]
@@ -62,9 +62,13 @@ class LocationsController < ApplicationController
     #cosi lo cerchi dentro type e se non esiste la categoria indicata dentro type,  vuol dire 
     #che il locale indicato non gli appartiene e quindi aggiungi la tupla. 
     def edit 
+        if !$admin 
+            redirect_to locations_path
+        end
         @update_loc = Location.find(params[:id])
         @cats = @update_loc.categories
         @categories = Category.all
+        @status_array = ["accepted", "pending", "rejected"]
     end 
 
     #Manca autenticazione admin
@@ -82,7 +86,7 @@ class LocationsController < ApplicationController
     #Manca autenticazione admin
     def update
         @update_loc = Location.where(id: params[:id]).first
-        @update_loc.update_attributes(name: params[:locations][:name], lat: params[:locations][:lat], long: params[:locations][:long], foto: params[:locations][:foto])
+        @update_loc.update_attributes(name: params[:locations][:name], lat: params[:locations][:lat], long: params[:locations][:long], foto: params[:locations][:foto], status: params[:status])
         @allCats = params[:categ]
         @tmp = []
         @allCats.each do |c|
@@ -90,11 +94,13 @@ class LocationsController < ApplicationController
         end
             
         @update_loc.categories = @tmp
-        @update_loc.update_attributes(status: "pending")
         redirect_to location_path(@update_loc)
     end
 
     def accept
+        if !$admin 
+            redirect_to locations_path
+        end
         @list = Location.where(status: "pending")
         @noList = "Non ci sono locali da accettare"
     end
@@ -114,7 +120,6 @@ class LocationsController < ApplicationController
                     @a.update_attributes(status: "accepted")
                 end
             end
-            
         end
         redirect_to index_admin_path
     end
