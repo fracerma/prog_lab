@@ -8,8 +8,8 @@
           <%= check_box_tag 'accepted[]', el.id -%>
           <%=  el.name -%>
         </li>
-        <%= submit_tag "Conferma" %>
     <% end %>
+    <%= submit_tag "Conferma" %>
   <% else %>
     <br/>
     <%= @noList %>

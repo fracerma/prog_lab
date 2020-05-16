@@ -1,7 +1,7 @@
 class LocationsController < ApplicationController
     before_action :is_logged
     
-    $admin = false
+    $admin = true
 
     def index_admin
         if $admin == true
@@ -64,22 +64,27 @@ class LocationsController < ApplicationController
     def edit 
         if !$admin 
             redirect_to locations_path
+        else 
+            @update_loc = Location.find(params[:id])
+            @cats = @update_loc.categories
+            @categories = Category.all
+            @status_array = ["accepted", "pending", "rejected"]
         end
-        @update_loc = Location.find(params[:id])
-        @cats = @update_loc.categories
-        @categories = Category.all
-        @status_array = ["accepted", "pending", "rejected"]
     end 
 
     #Manca autenticazione admin
-    def destroy 
-        id = params[:id]
-        @location = Location.find(id)      
-        @location.destroy
-        if $admin == true
-            redirect_to index_admin_path
-        else 
+    def destroy
+        if !$admin 
             redirect_to locations_path
+        else 
+            id = params[:id]
+            @location = Location.find(id)      
+            @location.destroy
+            if $admin == true
+                redirect_to index_admin_path
+            else 
+                redirect_to locations_path
+            end
         end
     end
 
