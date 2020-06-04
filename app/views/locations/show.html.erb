@@ -25,6 +25,11 @@
     .openPopup();
   </script>
 </p>
-
             
 <%= link_to "Back to home locations", locations_path %>
+
+<% if  $admin == true %>
+<br/>
+<%= link_to "Home Locations Admin", index_admin_path %>
+<%end%>
+

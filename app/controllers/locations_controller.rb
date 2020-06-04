@@ -1,31 +1,50 @@
 class LocationsController < ApplicationController
     before_action :is_logged
+    before_action :is_admin, except: [:index, :new, :create, :show] 
     
+    skip_before_action :verify_authenticity_token
+    
+    $admin = false
+
+    def index_admin
+        if $admin == true
+            @locat = Location.all
+        else 
+            redirect_to locations_path
+        end
+    end
 
     def index
-       @location = Location.all
+        @location = Location.where(status: "accepted")
     end
 
     def new 
         @newLoc = Location.new
         @categories = Category.all
+        @noCats = "Non ci sono categorie disponibili"
     end
 
     def show
-        @location = Location.find(params[:id])
-        @cats = []
-        @location.categories.each do |c|
-            @cats.append(Category.find(c.id))
+        if $admin == true  
+            @location = Location.find(params[:id])
+        else 
+            @location = Location.where(status: "accepted", id: params[:id])[0]
         end
-
+        @cats = []
+        if @location != nil
+            @location.categories.each do |c|
+                @cats.append(Category.find(c.id))
+            end
+        end
     end 
 
     #Manca autenticazione admin
     def create
-        if  !Location.where(name: params[:locations][:name]).empty?
+        if  !Location.where(name: params[:locations][:name], name: params[:locations][:lat], name: params[:locations][:long] ).empty?
             render html: "Il locale che stai cercango di aggiungere gia' esiste"
             
         else 
+
             @client = OpenStreetMap::Client.new
             @loc = "#{params[:locations][:street]}/" << "/#{params[:locations][:city]}"
             @res=@client.search(q: @loc, format: 'json', addressdetails: '1', accept_language: 'it')
@@ -39,11 +58,15 @@ class LocationsController < ApplicationController
            
             #@newLoc.update_attributes(status: "pending")
             @array = params[:categ]
-            @arr = []
-            @array.each do |c|
-                @arr.append(Category.find(c))
+            if @array != nil
+                @arr = []
+                @array.each do |c|
+                    @arr.append(Category.find(c))
+                end
+                @newLoc.categories = @arr
             end
             
+
             @newLoc.categories = @arr
             @newLoc.save
             
@@ -66,20 +89,50 @@ class LocationsController < ApplicationController
         id = params[:id]
         @location = Location.find(id)      
         @location.destroy
-        redirect_to locations_path
+        if $admin == true
+            redirect_to index_admin_path
+        else 
+            redirect_to locations_path
+        end
     end
 
     #Manca autenticazione admin
     def update
-        @update_loc = Location.find(params[:id])
+        @update_loc = Location.where(id: params[:id]).first
         @update_loc.update_attributes(name: params[:locations][:name], lat: params[:locations][:lat], long: params[:locations][:long], foto: params[:locations][:foto])
         @allCats = params[:categ]
         @tmp = []
         @allCats.each do |c|
-                @tmp.append(Category.find(c))
-            end
+            @tmp.append(Category.find(c))
+        end
             
         @update_loc.categories = @tmp
+        @update_loc.update_attributes(status: "pending")
         redirect_to location_path(@update_loc)
+    end
+
+    def accept
+        @list = Location.where(status: "pending")
+        @noList = "Non ci sono locali da accettare"
+    end
+
+    def accept_locations
+        @list = Location.where(status: "pending")
+        @accept = params[:accepted]
+        if @list != nil 
+            @list.each do |nl|
+                @n = Location.find(nl.id)
+                @n.update_attributes(status: "rejected")
+                
+            end
+            if @accept != nil 
+                @accept.each do |al|
+                    @a = Location.find(al)
+                    @a.update_attributes(status: "accepted")
+                end
+            end
+            
+        end
+        redirect_to index_admin_path
     end
 end
