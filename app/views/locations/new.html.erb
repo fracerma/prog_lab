@@ -1,21 +1,25 @@
-<h1>Aggiungi un locale</h1>
+<h1>Add a location</h1>
 
 <%= form_tag :action => 'create' do %>
-<p><label for="name">Nome locale:</label>
+<p><label for="name">Name of location:</label>
 
 <%= text_field 'locations', 'name', required: true%></p>
-<p><label for = "long">Longitutine</label>:
 
-<%= text_field 'locations', 'long', required: true%></p>
-<p><label for = "lat">Latitudine</label>:
+<!-- l'utente inserisce la via del locale, la città e il paese e Open Street Map trova long e lat-->
 
-<%= text_field 'locations', 'lat' , required: true%></p>
+<p>
+  <label for="street">Street:</label>
+  <%= text_field 'locations','street',required: true%>
+  <label for="city">City:</label>
+  <%= text_field 'locations','city',required: true%>
 
-<p><label for = "foto">Link Foto</label>:
+</p>
+
+<p><label for = "foto">Link Photo</label>:
 
 <%= text_field 'locations', 'foto' %></p>
 
-<p><label for = 'cat'>Categoria</label>
+<p><label for = 'cat'>Category</label>
 <ul>
   <% @categories.each do |cat| %>
       <li>
