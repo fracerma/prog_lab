@@ -6,6 +6,7 @@ class CreateLocations < ActiveRecord::Migration[5.2]
       t.float :lat
       t.string :street
       t.string :foto
+      t.string :status
 
       t.timestamps
     end

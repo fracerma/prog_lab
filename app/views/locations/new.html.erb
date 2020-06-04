@@ -21,12 +21,17 @@
 
 <p><label for = 'cat'>Category</label>
 <ul>
-  <% @categories.each do |cat| %>
-      <li>
-        <%= check_box_tag 'categ[]', cat.id -%>
-        <%=  cat.name -%>
-      </li>
-  <% end %>
+  <% if !@categories.empty? %>
+    <% @categories.each do |cat| %>
+        <li>
+          <%= check_box_tag 'categ[]', cat.id -%>
+          <%=  cat.name -%>
+        </li>
+    <% end %>
+  <% else %>
+    <br/>
+    <%= @noCats %>
+  <%end%>
 </ul>
 
 <%= submit_tag "Create" %>

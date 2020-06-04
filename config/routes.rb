@@ -23,6 +23,12 @@ Rails.application.routes.draw do
   post '/gatherings/new/generate_locations', to: 'gatherings#generate_locations'
   post '/gatherings/edit/update_location', to: 'gatherings#update_location'
 
+  #get '/accept/location', to: 'locations#accept'
+  get '/accept', to: 'locations#accept'
+  post '/accept', to: 'locations#accept_locations'
+
+  get '/index_admin', to: 'locations#index_admin'
+
 end
 
 

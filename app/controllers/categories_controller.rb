@@ -1,4 +1,7 @@
 class CategoriesController < ApplicationController
+    before_action :is_logged
+    before_action :is_admin, except: [:index, :show] 
+
     # lista di tutte le categorie
     def index # /categories
         @categories = Category.all
