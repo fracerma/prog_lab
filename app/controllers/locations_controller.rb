@@ -36,8 +36,8 @@ class LocationsController < ApplicationController
             @newLoc.lat=@lat
             @newLoc.long=@long
             @newLoc.street="#{params[:locations][:street]}, " << "#{params[:locations][:city]}"
-            #render html: @newLoc.street
-
+           
+            #@newLoc.update_attributes(status: "pending")
             @array = params[:categ]
             @arr = []
             @array.each do |c|
