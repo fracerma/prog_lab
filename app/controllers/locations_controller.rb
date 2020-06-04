@@ -55,9 +55,8 @@ class LocationsController < ApplicationController
             @newLoc.lat=@lat
             @newLoc.long=@long
             @newLoc.street="#{params[:locations][:street]}, " << "#{params[:locations][:city]}"
-            
+           
             @newLoc.update_attributes(status: "pending")
-
             @array = params[:categ]
             if @array != nil
                 @arr = []
@@ -66,9 +65,6 @@ class LocationsController < ApplicationController
                 end
                 @newLoc.categories = @arr
             end
-            
-
-            @newLoc.categories = @arr
             @newLoc.save
             
             redirect_to locations_path  

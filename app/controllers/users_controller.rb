@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     end
 
     def create
-        user=User.new!(params.require(:user).permit(:name,:email,:password))
+        user=User.new(params.require(:user).permit(:name,:email,:password))
         user.admin=false
         if(user.valid?)
             user.save
