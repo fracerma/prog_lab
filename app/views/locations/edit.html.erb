@@ -1,18 +1,18 @@
-<h1>Modifica un locale</h1>
+<h1>Edit a location</h1>
 
 <%= form_tag :location, :url => {:action => 'update', :id => @update_loc.id},
   :method => 'put' do %>
-<p><label for="name">Nome locale:</label>
+<p><label for="name">Name of location:</label>
 
 <%= text_field 'locations', 'name' , value: @update_loc.name%></p>
-<p><label for = "long">Longitutine</label>:
+<p><label for = "long">Long</label>:
 
 <%= text_field 'locations', 'long', value: @update_loc.long %></p>
-<p><label for = "lat">Latitudine</label>:
+<p><label for = "lat">Lat</label>:
 
 <%= text_field 'locations', 'lat' , value: @update_loc.lat %></p>
 
-<p><label for = "lat">Link Foto</label>:
+<p><label for = "lat">Link Photo</label>:
 
 <%= text_field 'locations', 'foto',  value: @update_loc.foto %></p>
 

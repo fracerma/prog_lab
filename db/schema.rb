@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 2020_05_15_175317) do
     t.string "name"
     t.float "long"
     t.float "lat"
+    t.string "street"
     t.string "foto"
     t.string "status"
     t.datetime "created_at", null: false

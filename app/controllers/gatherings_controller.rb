@@ -59,7 +59,7 @@ class GatheringsController < ApplicationController
             @partecipants = []
             puts @partecipants[0] = @current_user.id
         end
-        @locations = Location.all #fra chiede: PERCHé?
+        @locations = Location.all 
         @matching_loc = search_match(@partecipants)
         @date = params[:date]
     end 
