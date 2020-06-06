@@ -1,10 +1,32 @@
-<!--
-<h1>Register</h1>
-<p id=”alert”><%= alert %></p>
-<%= form_with model: @user do |f| %>
-  Nome: <%= f.text_field :name %>
-  Email: <%= f.email_field :email %>
-  Password: <%= f.password_field :password %>
-  <%= f.submit "Create" %>
-<% end %>
--->
+<div class="image_cover">
+  <%= image_tag  "pub.jpg" %>
+</div>
+<div class="form">
+  <h1>Register</h1>
+  <% flash.each do |type, msg| %>
+    <div class="alert">
+      <%= msg %>
+    </div>
+  <% end %>
+  <%= form_with model: @user do |f| %>
+    <div class="field">
+      <%= label_tag :name %>
+      <%= f.text_field :name, :required => true %>
+    </div> 
+    <div class="field">
+      <%= label_tag :email %>
+      <%= f.email_field :email, :required => true %>
+    </div>
+    <div class="field">
+      <%= label_tag :password %>
+      <%= f.password_field :password, :required => true %>
+    </div>
+    <div class="field">
+      <%= label_tag :confirm_Password %>
+      <%= f.password_field :pass_confirm, :required => true %>
+    </div>
+    <div class="actions">
+      <%= f.submit "Sign Up", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

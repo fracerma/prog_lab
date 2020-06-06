@@ -2,9 +2,7 @@ class LocationsController < ApplicationController
     before_action :authenticate_user!
     before_action :is_admin, except: [:index, :new, :create, :show] 
     
-    skip_before_action :verify_authenticity_token
-    
-    $admin = false
+    $admin = true
 
     def index_admin
         if $admin == true
@@ -25,11 +23,14 @@ class LocationsController < ApplicationController
     end
 
     def show
-        if $admin == true  
-            @location = Location.find(params[:id])
+        if @current_user.admin
+            logger.debug "qui"  
+            @location = Location.where(id: params[:id])[0]
+            logger.debug @location
         else 
             @location = Location.where(status: "accepted", id: params[:id])[0]
         end
+        
         @cats = []
         if @location != nil
             @location.categories.each do |c|
