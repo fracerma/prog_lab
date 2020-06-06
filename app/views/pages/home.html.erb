@@ -1,13 +1,14 @@
-<h1>Benvenuto!</h1>
+<!-- HOMEPAGE -->
+
+<h1>Homepage - Benvenuto!</h1>
 <br>
-<p id=”notice”><%= notice %></p>
+<!--<p id=”notice”><%= notice %></p>-->
 
 <% if !@current_user %>
-    <%= link_to  "Login", login_path %>
-    <%= link_to  "Signup", signup_path %>
+    <%= link_to  "Login", new_user_session_path %> &ensp;
+    <%= link_to  "Sign-up", new_user_registration_path %> 
 <% else%> 
-    Sei: <%= @current_user.email%> 
+    Sei: <%=  @current_user.email%> 
     <br>
-    <%= link_to  "Logout", logout_path %> 
     <%= link_to  "Vedi profilo", user_path %> 
 <% end%>

@@ -1,8 +1,14 @@
+<!-- PAGINA EDIT PROFILE -->
+
 <h1>Edit</h1>
 <p id=”alert”><%= alert %></p>
 <%= form_with model: @current_user, method:"PUT" do |f| %>
   Nome: <%= f.text_field :name  %>
   Email: <%= f.email_field :email %>
   Avatar url: <%= f.text_field :avatar %>
-  <%= f.submit "Edit" %>
-<% end %>
+  <!--<%= f.submit "Edit" %>-->
+  <%= submit_tag "Edit Profile" %>
+  <% end %>
+  <br>
+  <%= link_to 'Back', user_path %>
+

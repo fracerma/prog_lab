@@ -1,6 +1,6 @@
 class GatheringsController < ApplicationController
 
-    before_action :is_logged
+    before_action :authenticate_user!
 
 
     # lista delle uscite dell'utente

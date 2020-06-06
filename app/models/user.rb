@@ -1,5 +1,15 @@
 class User < ApplicationRecord
-    has_secure_password
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  
+  # caratteristiche di ogni utente iscritto a WhereNext:
+  # autenticabili attraverso l'uso del database (la loro identità digitale
+  # verrà salvata dentro il database), i loro attributi potranno essere recuperati (:recoverable), 
+  # l'utente potrà clicare su "ricordami" per non dover farel'autenticazione tutte le volte (:rememberable), etc..
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
+    
+         #has_secure_password
     validates :email, presence: true, uniqueness: true
 
     PASSWORD_REQUIREMENTS= /\A

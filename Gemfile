@@ -59,3 +59,6 @@ gem 'dotenv-rails'
 #gem to use street open map
 gem 'open_street_map'
 gem 'leaflet-rails'
+
+# gem used for authentication 
+gem 'devise'
