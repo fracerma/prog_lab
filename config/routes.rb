@@ -1,14 +1,23 @@
 Rails.application.routes.draw do
   
+
+  devise_for :users
   root 'pages#home'
 
   resource :user, except: [:new]
   resolve('User') { [:user] }
-  resources :sessions, only: [:create, :destroy]
+  #resources :sessions, only: [:create, :destroy]
+  
+  devise_scope :user do
+    get '/sessions/user', to: 'devise/sessions#create', via: :post
+  end
 
-  get 'signup', to: 'users#new', as: 'signup'
-  get 'login', to: 'pages#login', as: 'login'
-  get 'logout', to: 'sessions#destroy', as: 'logout'
+  get '/sessions/user', to: 'devise/sessions#create', via: :post
+  
+  #get 'signup', to: 'users#new', as: 'signup'
+  #get 'login', to: 'pages#login', as: 'login'
+  #get 'logout', to: 'sessions#destroy', as: 'logout'
+  
 
   #localhost:3000/locations/:id/types/show
   
@@ -28,6 +37,7 @@ Rails.application.routes.draw do
   post '/accept', to: 'locations#accept_locations'
 
   get '/index_admin', to: 'locations#index_admin'
+
 
 end
 

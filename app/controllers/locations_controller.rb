@@ -1,5 +1,8 @@
 class LocationsController < ApplicationController
-    before_action :is_logged
+    before_action :authenticate_user!
+    before_action :is_admin, except: [:index, :new, :create, :show] 
+    
+    skip_before_action :verify_authenticity_token
     
     $admin = true
 
@@ -41,8 +44,18 @@ class LocationsController < ApplicationController
             render html: "Il locale che stai cercango di aggiungere gia' esiste"
             
         else 
-            #Controlla che  il locale inserito non esista gia'DA FARE
-            @newLoc = Location.create!(params.require(:locations).permit(:name, :lat, :long, :foto))
+
+            @client = OpenStreetMap::Client.new
+            @loc = "#{params[:locations][:street]}/" << "/#{params[:locations][:city]}"
+            @res=@client.search(q: @loc, format: 'json', addressdetails: '1', accept_language: 'it')
+            @lat=@res[0]['lat']
+            @long=@res[0]['lon']
+        
+            @newLoc = Location.new(params.require(:locations).permit(:name, :foto))
+            @newLoc.lat=@lat
+            @newLoc.long=@long
+            @newLoc.street="#{params[:locations][:street]}, " << "#{params[:locations][:city]}"
+           
             @newLoc.update_attributes(status: "pending")
             @array = params[:categ]
             if @array != nil
@@ -52,9 +65,10 @@ class LocationsController < ApplicationController
                 end
                 @newLoc.categories = @arr
             end
+            @newLoc.save
             
             redirect_to locations_path  
-        end
+         end
     end
 
     #Manca autenticazione admin

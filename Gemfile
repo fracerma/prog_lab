@@ -54,3 +54,11 @@ gem 'bootstrap', '~> 4.4.1'
 gem 'jquery-rails'
 
 gem 'dotenv-rails'
+
+
+#gem to use street open map
+gem 'open_street_map'
+gem 'leaflet-rails'
+
+# gem used for authentication 
+gem 'devise'

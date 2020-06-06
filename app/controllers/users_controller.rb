@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    before_action :is_logged, except: [:new, :create]
+    before_action :authenticate_user!, except: [:new, :create]
     def show
     end
 
@@ -8,8 +8,10 @@ class UsersController < ApplicationController
     end
 
     def create
-        user=User.create!(params.require(:user).permit(:name,:email,:password))
+        user=User.new(params.require(:user).permit(:name,:email,:password))
+        user.admin=false
         if(user.valid?)
+            user.save
             flash[:notice] = "Registered!"
             redirect_to root_path
         else
@@ -19,6 +21,7 @@ class UsersController < ApplicationController
     end
 
     def edit
+        
     end
 
     def update

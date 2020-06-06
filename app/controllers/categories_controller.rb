@@ -1,4 +1,8 @@
 class CategoriesController < ApplicationController
+    # :authenticate_user! ->  metodo di supporto fornito fornito da devise 
+    before_action :authenticate_user!
+    before_action :is_admin, except: [:index, :show] 
+
     # lista di tutte le categorie
     def index # /categories
         @categories = Category.all
