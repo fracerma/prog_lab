@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    before_action :is_logged, except: [:new, :create]
+    before_action :authenticate_user!, except: [:new, :create]
     def show
     end
 
@@ -21,6 +21,7 @@ class UsersController < ApplicationController
     end
 
     def edit
+        
     end
 
     def update

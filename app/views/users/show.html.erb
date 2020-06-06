@@ -1,3 +1,4 @@
+<!-- PROFILO PERSONALE -->
 <p>Nome: <%= @current_user.name %> </p>
 <p>Email: <%= @current_user.email %> </p>
 <p>
@@ -12,3 +13,6 @@ Avatar:
 <br>
 <%= link_to  "ELIMINA PROFILO", user_path,:method => :delete, :data => {:confirm => "You sure?"},
                                 :title => "Delete #{@current_user.name}" %>
+<br>
+<br>
+<%= link_to 'Back to homepage', root_path %>
