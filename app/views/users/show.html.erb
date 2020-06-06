@@ -3,29 +3,29 @@
 </div>
 <div class="user_info">
     <div class="image">
-        <% if @current_user.avatar!="" %> 
-            <%= image_tag  @current_user.avatar %>
+        <% if current_user.avatar %> 
+            <%= image_tag  current_user.avatar %>
         <% else %>
             <%= image_tag  "no-profile-picture.jpg" %>
         <% end %>
     </div>
     <div>
-        <strong>Nome:</strong> <%= @current_user.name %> 
+        <strong>Nome:</strong> <%= current_user.name %> 
         <br>
-        <strong>Email:</strong> <%= @current_user.email %>
+        <strong>Email:</strong> <%= current_user.email %>
         <br>
-        <strong>Role:</strong> <%= @current_user.admin %>  
+        <strong>Role:</strong> <%= current_user.admin %>  
     </div>
     <div>
         <%= link_to  "Edit Profile", edit_user_path, class: "btn btn-primary" %>
     </div>
     <div>
         <%= link_to  "DELETE PROFILE", user_path,:method => :delete, :data => {:confirm => "You sure?"},
-                                    :title => "Delete #{@current_user.name}",class: "btn btn-danger" %>
+                                    :title => "Delete #{current_user.name}",class: "btn btn-danger" %>
     </div>
 </div>
 <!--TODO aggiungi ruolo guida-->
-<%if !@current_user.admin%> 
+<%if !current_user.admin%> 
     <div class="user_add">
     <h1> Add new friends</h1>
     <h5> <cite>Good friends know the exact number of drinks you can handle before you makes poor choices. </cite>&#x1F609</h5>

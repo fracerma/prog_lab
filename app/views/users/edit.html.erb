@@ -3,7 +3,6 @@
 </div>
 <div class="user_info">
   <h1>Edit</h1>
-  <p id=”alert”><%= alert %></p>
   <%= form_with model: @current_user, method:"PUT" do |f| %>
   <div>
     Nome: <%= f.text_field :name  %>

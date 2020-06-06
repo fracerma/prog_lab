@@ -30,7 +30,7 @@ class UsersController < ApplicationController
 
     def update
         if(@current_user.update(params.require(:user).permit(:name,:email,:avatar)))
-            redirect_to user_path
+            redirect_to root_path
         else
             flash[:alert]="Email is used!"
             redirect_to edit_user_path
