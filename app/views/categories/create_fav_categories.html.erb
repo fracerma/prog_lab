@@ -1,0 +1,9 @@
+<h2> YOUR FAVOURITE CATEGORIES: </h2>
+
+<% if !@current_user.categories.empty? %>
+    <% @current_user.categories.each do |cat| %>     
+        <%=  cat.name -%>&nbsp;<br></td>    
+    <% end %>
+    <% else %>
+    <p> There are no favourite categories. </p>
+  <%end%>

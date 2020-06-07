@@ -19,17 +19,18 @@ Rails.application.routes.draw do
   #get 'login', to: 'pages#login', as: 'login'
   #get 'logout', to: 'sessions#destroy', as: 'logout'
   
-  
-  
+  resources :categories
+
+  get '/categories/users/fav_categories', to:'categories#create_fav_categories', as: 'fav_categories'
+  post '/categories/users/fav_categories', to:'categories#create_fav_categories', as: 'create_fav_categories'
+
   resources :locations
-  
   
   get '/locations/add_favloc/:id', to: 'locations#addto_favloc', as: 'add_favloc'
   get '/users/locations', to: 'locations#index_favloc', as: 'index_favloc'
   delete '/locations/delete_favloc/:id', to: 'locations#deletefrom_favloc', as: 'delete_favloc'
 
   
-  resources :categories
   resources :gatherings
 
   #generazione e modifica della location

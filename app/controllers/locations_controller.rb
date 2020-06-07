@@ -1,6 +1,6 @@
 class LocationsController < ApplicationController
     before_action :authenticate_user!
-    before_action :is_admin, except: [:index, :new, :create, :show] 
+    #before_action :is_admin, except: [:index, :new, :create, :show] 
     
     $admin = true
 
