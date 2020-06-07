@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    before_action :authenticate_user!, except: [:new, :create]
+    #before_action :authenticate_user!, except: [:new, :create]
     def show
     end
 
@@ -44,5 +44,6 @@ class UsersController < ApplicationController
         redirect_to root_path
     end
 
+    
 
 end

@@ -7,9 +7,11 @@ class User < ApplicationRecord
   # verrà salvata dentro il database), i loro attributi potranno essere recuperati (:recoverable), 
   # l'utente potrà clicare su "ricordami" per non dover farel'autenticazione tutte le volte (:rememberable), etc..
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
-    
-         #has_secure_password
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, 
+         :omniauth_providers => [:facebook] 
+
+    #has_secure_password
     validates :email, presence: true, uniqueness: true
 
     PASSWORD_REQUIREMENTS= /\A
@@ -34,4 +36,19 @@ class User < ApplicationRecord
 
     has_many :groups
     has_many :gatherings, :through => :groups
-end
+
+    def self.from_omniauth(auth)
+        where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+            user.email = auth.info.email
+            user.password = Devise.friendly_token[0,20]
+        end
+    end
+    
+    def self.new_with_session(params, session)
+        super.tap do |user|
+            if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
+            user.email = data["email"] if user.email.blank?
+            end
+        end
+    end 
+    end
