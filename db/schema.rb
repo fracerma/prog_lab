@@ -76,18 +76,6 @@ ActiveRecord::Schema.define(version: 2020_06_06_084633) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "reviews", force: :cascade do |t|
-    t.integer "vote"
-    t.text "comment"
-    t.date "date"
-    t.bigint "users_id"
-    t.bigint "locations_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["locations_id"], name: "index_reviews_on_locations_id"
-    t.index ["users_id"], name: "index_reviews_on_users_id"
-  end
-
   create_table "types", force: :cascade do |t|
     t.bigint "category_id"
     t.bigint "location_id"
