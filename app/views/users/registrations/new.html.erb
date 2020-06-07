@@ -33,6 +33,8 @@
 
     <div class="actions">
       <%= f.submit "Sign up",class:"btn btn-primary" %>
+      <br>
+        <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path, class:"btn btn-primary" %>
     </div>
   <% end %>
 </div>
