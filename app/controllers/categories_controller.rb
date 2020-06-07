@@ -1,7 +1,7 @@
 class CategoriesController < ApplicationController
     # :authenticate_user! ->  metodo di supporto fornito fornito da devise 
-    before_action :authenticate_user!
-    before_action :is_admin, except: [:index, :show] 
+    #before_action :authenticate_user!
+    # before_action :is_admin, except: [:index, :show] cancellato MOMENTANEAMENTE, DA RIMUOVERE
 
     # lista di tutte le categorie
     def index # /categories
@@ -21,6 +21,21 @@ class CategoriesController < ApplicationController
     def show  # /categories/:id
         @current_category = Category.find(params[:id])
         @locs = @current_category.locations
+    end
+
+
+    def create_fav_categories
+        #render html: 'ciao'
+        @categ = params[:categ]
+        if @categ != nil
+            @fav_cats = []
+            @categ.each do |c|
+                @fav_cats.append(Category.find(c))
+            end  
+            @current_user.categories = @fav_cats
+        end 
+        @current_user.save
+        #redirect_to create_fav_categories_path      
     end
 
     # modifica (da parte di chi?) una categoria id

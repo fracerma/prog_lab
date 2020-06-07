@@ -24,6 +24,11 @@
                                     :title => "Delete #{current_user.name}",class: "btn btn-danger" %>
     </div>
 </div>
+<div class="user_info">
+    <h2> See all the categories and choose your favourites: <h2> 
+     <%= link_to  "Categories", categories_path, class: "btn btn-warning" %>
+    <%= link_to  "Your Favourites Categories", fav_categories_path, class: "btn btn-warning" %>
+</div>
 <!--TODO aggiungi ruolo guida-->
 <%if !current_user.admin%> 
     <div class="user_add">

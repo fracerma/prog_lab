@@ -1,6 +1,6 @@
 
-<h1> LISTA DI TUTTE LE CATEGORIE: </h1>
-
+<h1> LIST OF ALL CATEGORIES: </h1>
+<br>
 <table>
   <thead>
     <tr>
@@ -10,18 +10,34 @@
   </thead>
  
   <tbody>
-    <% @categories.each do |category| %>
-      <tr>
-        <td><%= category.name %> &nbsp;</td>
-        <td><%= link_to "Show", category %>&nbsp; </td>
-        <td><%= link_to "Edit", edit_category_path(category) %>&nbsp; </td>
-        <td><%= link_to "Destroy", category, method: :delete, data: { confirm: "Are you sure?" } %></td>
+  <h2><label for = 'cat'>Choose your favourites categories:</label></h2>
+  <%= form_tag :action => 'create_fav_categories' do %>
+
+    <% if !@categories.empty? %>
+    <% @categories.each do |cat| %>
+      <tr>       
+        <td><%= check_box_tag 'categ[]', cat.id %></td>        
+        <td><%=  cat.name -%>&nbsp;</td>
+        <td><%= link_to "Show", cat %>&nbsp; </td>
+        <td><%= link_to "Edit", edit_category_path(cat) %>&nbsp; </td>
+        <td><%= link_to "Destroy", cat, method: :delete, data: { confirm: "Are you sure?" } %></td>
         <td> <hr> </td>
       </tr>
     <% end %>
-  </tbody>
+    <% else %>
+    <br/>
+    <%= @noCats %>
+  <%end%>
 </table>
- 
+
+<%= submit_tag "Add Categories" %>
+<% end -%>
+
 <br>
- 
+<h2> See your favourites categories here: </h2>
+<%= link_to  "Your Favourites Categories", create_fav_categories_path %>
+</tbody>
+
+<br>
+ <hr>
 <%= link_to "New category", new_category_path %>
