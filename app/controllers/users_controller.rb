@@ -8,15 +8,19 @@ class UsersController < ApplicationController
     end
 
     def create
-        user=User.new(params.require(:user).permit(:name,:email,:password))
-        user.admin=false
-        if(user.valid?)
-            user.save
-            flash[:notice] = "Registered!"
-            redirect_to root_path
+        if(params[:user][:password]!=params[:user][:pass_confirm])
+            flash[:alert] = "Confirm password is wrong"
+            redirect_to request.referrer
         else
-            flash[:allert] = "Password or email invalid!"
-            redirect_to root_path
+            user=User.new(params.require(:user).permit(:name,:email,:password))
+            user.admin=false
+            if(user.valid?)
+                user.save!
+                redirect_to login_path
+            else
+                flash[:alert] = "Password or email is invalid!"
+                redirect_to request.referrer
+            end
         end
     end
 
@@ -26,7 +30,7 @@ class UsersController < ApplicationController
 
     def update
         if(@current_user.update(params.require(:user).permit(:name,:email,:avatar)))
-            redirect_to user_path
+            redirect_to root_path
         else
             flash[:alert]="Email is used!"
             redirect_to edit_user_path

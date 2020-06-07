@@ -2,9 +2,7 @@ class LocationsController < ApplicationController
     before_action :authenticate_user!
     before_action :is_admin, except: [:index, :new, :create, :show] 
     
-    skip_before_action :verify_authenticity_token
-    
-    $admin = false
+    $admin = true
 
     def index_admin
         if $admin == true
@@ -25,11 +23,14 @@ class LocationsController < ApplicationController
     end
 
     def show
-        if $admin == true  
-            @location = Location.find(params[:id])
+        if @current_user.admin
+            logger.debug "qui"  
+            @location = Location.where(id: params[:id])[0]
+            logger.debug @location
         else 
             @location = Location.where(status: "accepted", id: params[:id])[0]
         end
+        
         @cats = []
         if @location != nil
             @location.categories.each do |c|
@@ -132,4 +133,27 @@ class LocationsController < ApplicationController
         end
         redirect_to index_admin_path
     end
+
+    def addto_favloc
+        id = params[:id]
+        @loc = Location.find(id)
+        if(!current_user.locations.include?(@loc))
+            current_user.locations << @loc
+        end
+        redirect_to locations_path
+    end
+
+    def deletefrom_favloc
+        id = params[:id]
+        @loc=Location.find(id)
+        if(current_user.locations.include?(@loc))
+            current_user.locations.delete(@loc)
+        end
+        redirect_to locations_path
+    end
+
+    def index_favloc
+        @locations=@current_user.locations
+    end
+
 end

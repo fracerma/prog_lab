@@ -15,4 +15,11 @@
  *= require leaflet
  */
  @import "bootstrap";
-
+ @import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+ html,
+ body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+ }
