@@ -25,15 +25,15 @@
     .openPopup();
   </script>
 </p>
-            
-<<<<<<< HEAD
-<!--
-<%= link_to "Home Locations", locations_path %>
-<% if  $admin == true %>
-<br/>
-<%= link_to "Home Locations Admin", index_admin_path %>
-<%end%> -->
-=======
+
+<!-- TODO ruoli-->
+<%if !@current_user.locations.include?(@location)%>
+  <%= link_to "Add to favourites locations", add_favloc_path(@location.id) %>
+  <%else%>
+  <%= link_to "Delete from favourites locations", delete_favloc_path(@location.id), method: :delete %>
+<%end%>
+
+<br/>            
 <%= link_to "Back to home locations", locations_path %>
 
 <% if  $admin == true %>
@@ -41,4 +41,3 @@
 <%= link_to "Home Locations Admin", index_admin_path %>
 <%end%>
 
->>>>>>> f80b7e85d47e710d233bea507273aeb7ea71b28b

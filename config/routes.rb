@@ -18,12 +18,15 @@ Rails.application.routes.draw do
   #get 'login', to: 'pages#login', as: 'login'
   #get 'logout', to: 'sessions#destroy', as: 'logout'
   
-
-  #localhost:3000/locations/:id/types/show
+  
   
   resources :locations
+  
+  
+  get '/locations/add_favloc/:id', to: 'locations#addto_favloc', as: 'add_favloc'
+  get '/users/locations', to: 'locations#index_favloc', as: 'index_favloc'
+  delete '/locations/delete_favloc/:id', to: 'locations#deletefrom_favloc', as: 'delete_favloc'
 
-  #localhost:3000/types/:id/locations/show
   
   resources :categories
   resources :gatherings
@@ -32,11 +35,16 @@ Rails.application.routes.draw do
   post '/gatherings/new/generate_locations', to: 'gatherings#generate_locations'
   post '/gatherings/edit/update_location', to: 'gatherings#update_location'
 
-  #get '/accept/location', to: 'locations#accept'
+
   get '/accept', to: 'locations#accept'
   post '/accept', to: 'locations#accept_locations'
 
+
+  
+
   get '/index_admin', to: 'locations#index_admin'
+
+  
 
 
 end
