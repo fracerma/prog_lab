@@ -3,29 +3,7 @@ class UsersController < ApplicationController
     def show
     end
 
-    def new
-        @user=User.new
-    end
-
-    def create
-        if(params[:user][:password]!=params[:user][:pass_confirm])
-            flash[:alert] = "Confirm password is wrong"
-            redirect_to request.referrer
-        else
-            user=User.new(params.require(:user).permit(:name,:email,:password))
-            user.admin=false
-            if(user.valid?)
-                user.save!
-                redirect_to login_path
-            else
-                flash[:alert] = "Password or email is invalid!"
-                redirect_to request.referrer
-            end
-        end
-    end
-
     def edit
-        
     end
 
     def update
