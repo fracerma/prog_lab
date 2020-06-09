@@ -37,11 +37,31 @@ class UsersController < ApplicationController
         end
 
     end
+
+    def index_friends
+        @friends=current_user.friends
+    end
+
+    def index_users
+        @users= User.where.not(id: current_user.friends) #TODO fai vedere solo quelli con ruolo user
+    end
     
-    def destroy
-        User.delete(@current_user)
-        session[:user_id] = nil
-        redirect_to root_path
+    def add_friend
+        new_friend=User.find(params[:id])
+        if(!current_user.friends.include? new_friend)
+            current_user.friends<<new_friend
+            redirect_to user_friends_path
+        else
+            redirect_to user_all_path
+        end
+    end
+
+    def remove_friend
+        rem_friend=User.find(params[:id])
+        if(current_user.friends.include? rem_friend)
+            current_user.friends.delete(rem_friend)
+        end
+        redirect_to user_friends_path
     end
 
 

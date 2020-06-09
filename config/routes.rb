@@ -6,6 +6,11 @@ Rails.application.routes.draw do
 
   resource :user, except: [:new]
   resolve('User') { [:user] }
+  get '/users/all', to: 'users#index_users'
+  get '/user/friends', to: 'users#index_friends'
+  delete '/user/friends', to: 'users#remove_friend'
+  post '/users/all', to: 'users#add_friend'
+
   #resources :sessions, only: [:create, :destroy]
   
   devise_scope :user do
@@ -34,6 +39,8 @@ Rails.application.routes.draw do
 
   #get '/accept/location', to: 'locations#accept'
   get '/accept', to: 'locations#accept'
+  post '/accept', to: 'locations#accept_locations'
+
   post '/accept', to: 'locations#accept_locations'
 
   get '/index_admin', to: 'locations#index_admin'
