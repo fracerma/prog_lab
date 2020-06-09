@@ -1,6 +1,6 @@
 class LocationsController < ApplicationController
     before_action :authenticate_user!
-    before_action :is_admin, except: [:index, :new, :create, :show] 
+    #before_action :is_admin, except: [:index, :new, :create, :show] 
     
     $admin = true
 
@@ -133,4 +133,27 @@ class LocationsController < ApplicationController
         end
         redirect_to index_admin_path
     end
+
+    def addto_favloc
+        id = params[:id]
+        @loc = Location.find(id)
+        if(!current_user.locations.include?(@loc))
+            current_user.locations << @loc
+        end
+        redirect_to locations_path
+    end
+
+    def deletefrom_favloc
+        id = params[:id]
+        @loc=Location.find(id)
+        if(current_user.locations.include?(@loc))
+            current_user.locations.delete(@loc)
+        end
+        redirect_to locations_path
+    end
+
+    def index_favloc
+        @locations=@current_user.locations
+    end
+
 end
