@@ -8,10 +8,10 @@ class UsersController < ApplicationController
     end
 
     def create
-        user=User.new(params.require(:user).permit(:name,:email,:password))
-        user.admin=false
-        if(user.valid?)
-            user.save
+        @user=User.new(params.require(:user).permit(:name,:email,:password))
+        @user.roles= [:admin]
+        if(@user.valid?)
+            @user.save
             flash[:notice] = "Registered!"
             redirect_to root_path
         else

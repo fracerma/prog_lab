@@ -1,4 +1,8 @@
+require 'rubygems'
+require 'role_model'
+
 class User < ApplicationRecord
+  include RoleModel
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   
@@ -34,4 +38,10 @@ class User < ApplicationRecord
 
     has_many :groups
     has_many :gatherings, :through => :groups
+
+
+    roles :admin, :owner, :user
+
+    acts_as_user :roles=> [:user, :owner, :admin]
+
 end

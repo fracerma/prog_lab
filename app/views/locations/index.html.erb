@@ -23,7 +23,7 @@
 </table>
 <br/>
 <%= link_to "New", new_location_path %>
-<% if  $admin == true %>
+<% if  current_user.is_admin? || current_user.is_owner? %>
 <br/>
 <%= link_to "Home Locations Admin", index_admin_path %>
 <%end%>

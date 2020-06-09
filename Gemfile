@@ -62,3 +62,6 @@ gem 'leaflet-rails'
 
 # gem used for authentication 
 gem 'devise'
+
+gem 'canard', '~> 0.5.0.pre'
+gem 'rspec'

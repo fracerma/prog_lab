@@ -1,13 +1,11 @@
 class LocationsController < ApplicationController
     before_action :authenticate_user!
-    before_action :is_admin, except: [:index, :new, :create, :show] 
     
     skip_before_action :verify_authenticity_token
     
-    $admin = true
-
+    $admin = false
     def index_admin
-        if $admin == true
+        if current_user.is_admin?
             @locat = Location.all
         else 
             redirect_to locations_path
@@ -16,6 +14,7 @@ class LocationsController < ApplicationController
 
     def index
         @location = Location.where(status: "accepted")
+        
     end
 
     def new 
@@ -25,7 +24,7 @@ class LocationsController < ApplicationController
     end
 
     def show
-        if $admin  
+        if current_user.is_admin?
             @location = Location.find(params[:id])
         else 
             @location = Location.where(status: "accepted", id: params[:id])[0]
@@ -75,36 +74,28 @@ class LocationsController < ApplicationController
     #Devi passare un array che contiene l-id di location e l-id di category 
     #cosi lo cerchi dentro type e se non esiste la categoria indicata dentro type,  vuol dire 
     #che il locale indicato non gli appartiene e quindi aggiungi la tupla. 
-    def edit 
-        if !$admin 
-            redirect_to locations_path
-        else 
-            @update_loc = Location.find(params[:id])
-            @cats = @update_loc.categories
-            @categories = Category.all
-            @status_array = ["accepted", "pending", "rejected"]
-        end
+    def edit   
+
+        @update_loc = Location.find(params[:id])
+        authorize! :update, @update_loc, :message=>"You are not authorized to complete this action."
+        @cats = @update_loc.categories
+        @categories = Category.all
+        @status_array = ["accepted", "pending", "rejected"]
     end 
 
     #Manca autenticazione admin
-    def destroy
-        if !$admin 
-            redirect_to locations_path
-        else 
+    def destroy 
             id = params[:id]
-            @location = Location.find(id)      
+            @location = Location.find(id) 
+            authorize! :destroy, @location, :message=>"You are not authorized to complete this action."     
             @location.destroy
-            if $admin == true
-                redirect_to index_admin_path
-            else 
-                redirect_to locations_path
-            end
-        end
+            redirect_to index_admin_path
     end
 
     #Manca autenticazione admin
     def update
         @update_loc = Location.where(id: params[:id]).first
+        authorize! :update, @update_loc, :message=>"You are not authorized to complete this action."
         @update_loc.update_attributes(name: params[:locations][:name], lat: params[:locations][:lat], long: params[:locations][:long], foto: params[:locations][:foto], status: params[:status])
         @allCats = params[:categ]
         @tmp = []
@@ -117,7 +108,7 @@ class LocationsController < ApplicationController
     end
 
     def accept
-        if !$admin 
+        if !current_user.is_admin?
             redirect_to locations_path
         end
         @list = Location.where(status: "pending")
