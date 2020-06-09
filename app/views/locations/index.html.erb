@@ -23,8 +23,9 @@
             <% end %>
         </tbody>
     </table>
+     <%if current_user.is_owner?%>
+        <%= link_to "New", new_location_path %>
+    <%end%> 
 </div>
 
-    <!-- <%if @current_user.admin%> metti ruolo giusto 
-        <%= link_to "New", new_location_path %>
-     <%end%> -->
+

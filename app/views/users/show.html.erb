@@ -15,7 +15,7 @@
             <br>
             <strong>Email:</strong> <%= current_user.email %>
             <br>
-            <strong>Role:</strong> <%= current_user.admin %>  
+            <strong>Role:</strong> <%= current_user.role %>  
         </div>
         <div>
             <%= link_to  "Edit Profile", edit_user_path, class: "btn btn-primary" %>
@@ -26,7 +26,7 @@
         </div>
     </div>
     <!--TODO aggiungi ruolo guida-->
-    <%if !current_user.admin%> 
+    <%if !(current_user.is_admin?||current_user.is_owner?)%> 
         <div class="friend_section">
             <div class="user_add">
                 <h1> Your friends</h1>

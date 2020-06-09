@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+    ROLES = %w[user owner].freeze
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   
@@ -26,6 +27,8 @@ class User < ApplicationRecord
     has_many :fav_locations
     has_many :locations, :through => :fav_locations, :dependent => :destroy
 
+    has_many :my_locations, :class_name => "Location"
+
     has_many :fav_categories
     has_many :categories, :through => :fav_categories, :dependent => :destroy
 
@@ -51,4 +54,4 @@ class User < ApplicationRecord
             end
         end
     end 
-    end
+end

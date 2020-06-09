@@ -1,11 +1,8 @@
 class LocationsController < ApplicationController
     before_action :authenticate_user!
-    #before_action :is_admin, except: [:index, :new, :create, :show] 
-    
-    $admin = true
 
     def index_admin
-        if $admin == true
+        if current_user.is_admin?
             @locat = Location.all
         else 
             redirect_to locations_path
@@ -13,7 +10,11 @@ class LocationsController < ApplicationController
     end
 
     def index
-        @location = Location.where(status: "accepted")
+        if current_user.is_owner?
+            @locations
+        else
+            @location = Location.where(status: "accepted")
+        end
     end
 
     def new 
@@ -39,7 +40,6 @@ class LocationsController < ApplicationController
         end
     end 
 
-    #Manca autenticazione admin
     def create
         if  !Location.where(name: params[:locations][:name], name: params[:locations][:lat], name: params[:locations][:long] ).empty?
             render html: "Il locale che stai cercango di aggiungere gia' esiste"
