@@ -10,13 +10,17 @@
   </thead>
  
   <tbody>
-  <h2><label for = 'cat'>Choose your favourites categories:</label></h2>
-  <%= form_tag :action => 'create_fav_categories' do %>
-
+  <% if current_user.is_user? %>  
+    <h2><label for = 'cat'>Choose your favourites categories:</label></h2>
+  <%end%>   
+    <%= form_tag :action => 'create_fav_categories' do %>
+  
     <% if !@categories.empty? %>
     <% @categories.each do |cat| %>
-      <tr>       
-        <td><%= check_box_tag 'categ[]', cat.id %></td>        
+      <tr>
+        <% if current_user.is_user? %>      
+          <td><%= check_box_tag 'categ[]', cat.id %></td>   
+       <%end%>   
         <td><%=  cat.name -%>&nbsp;</td>
         <td><%= link_to "Show", cat %>&nbsp; </td>
 
@@ -36,13 +40,16 @@
     <%= @noCats %>
   <%end%>
 </table>
-
-<%= submit_tag "Add Categories" %>
+<% if current_user.is_user? %>
+  <%= submit_tag "Add Categories" %>
+<%end%>
 
 
 <br>
-<h2> See your favourites categories here: </h2>
-<%= link_to  "Your Favourites Categories", create_fav_categories_path %>
+<% if current_user.is_user? %>
+  <h2> See your favourites categories here: </h2>
+  <%= link_to  "Your Favourites Categories", create_fav_categories_path %>
+<% end -%>
 </tbody>
 <% end -%>
 <br>
