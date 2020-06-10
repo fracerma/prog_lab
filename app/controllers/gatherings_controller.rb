@@ -10,6 +10,7 @@ class GatheringsController < ApplicationController
 
     def create 
         @gathering=Gathering.new(date: params[:date])
+        authorize! :create, @gathering, :message=>"You are not authorized to complete this action."
         params[:partecipants].each do |part|
             @gathering.users << User.find(part)
         end 
@@ -29,11 +30,13 @@ class GatheringsController < ApplicationController
     # modifica le informazioni di un'uscita
     def edit 
         @gathering = Gathering.find(params[:id])
+        authorize! :update, @gathering, :message=>"You are not authorized to complete this action."
     end
 
     def update
         @location = Location.find(params[:location])
         @gathering=Gathering.find(params[:id])
+        authorize! :update, @gathering, :message=>"You are not authorized to complete this action."
         @gathering.update_attributes!(date: params[:date])
         @gathering.update_attributes!(location: @location)
 		redirect_to gathering_path(@gathering)
@@ -42,7 +45,8 @@ class GatheringsController < ApplicationController
     # elimina l'uscita con quell'id
     def destroy 
         id = params[:id]
-		@gathering = Gathering.find(id)
+        @gathering = Gathering.find(id)
+        authorize! :destroy, @gathering, :message=>"You are not authorized to complete this action."
 		@gathering.destroy
 		redirect_to gatherings_path
     end 
@@ -65,6 +69,7 @@ class GatheringsController < ApplicationController
 
     def update_location
         @gathering = Gathering.find(params[:id])
+        authorize! :update, @gathering, :message=>"You are not authorized to complete this action."
         if(params[:adduser])
             params[:adduser].each do |user|
                 if(!(@gathering.users.include?(user)))

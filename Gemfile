@@ -60,7 +60,11 @@ gem 'dotenv-rails'
 gem 'open_street_map'
 gem 'leaflet-rails'
 
-# devise: gem used for authentication 
+# gem used for authentication 
 gem 'devise'
+
+gem 'canard', '~> 0.5.0.pre'
+gem 'rspec'
+# devise: gem used for authentication 
 # devise manages authentication via OAuth (facebook) through this special module/gem: 
 gem 'omniauth-facebook'

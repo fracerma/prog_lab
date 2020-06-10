@@ -1,4 +1,8 @@
+require 'rubygems'
+require 'role_model'
+
 class User < ApplicationRecord
+  include RoleModel
     ROLES = %w[user owner].freeze
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -40,6 +44,12 @@ class User < ApplicationRecord
     has_many :groups
     has_many :gatherings, :through => :groups
 
+
+    roles :admin, :owner, :user
+
+    acts_as_user :roles=> [:user, :owner, :admin]
+
+end
     def self.from_omniauth(auth)
         where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
             user.email = auth.info.email
@@ -54,4 +64,4 @@ class User < ApplicationRecord
             end
         end
     end 
-end
+

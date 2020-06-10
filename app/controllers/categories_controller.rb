@@ -9,12 +9,16 @@ class CategoriesController < ApplicationController
     end
 
     def create # /categories
-        @category = Category.create(params.require(:categories).permit(:name))
+        @category = Category.new(params.require(:categories).permit(:name))
+        authorize! :create, @category, :message=>"You are not authorized to complete this action."
+        @category.save
         redirect_to categories_path
     end 
 
     def new  # /categories/new
+        authorize! :create, @category, :message=>"You are not authorized to complete this action."
         @category = Category.new
+
     end 
 
     # con la show voglio mostrare la lista di tutti i locali che hanno come proprietà quella categoria
@@ -31,6 +35,7 @@ class CategoriesController < ApplicationController
             @categ.each do |c|
                 @fav_cats.append(Category.find(c))
             end  
+            authorize! :create, @fav_cats, :message=>"You are not authorized to complete this action."
             current_user.categories = @fav_cats
         end 
         current_user.save
@@ -40,6 +45,7 @@ class CategoriesController < ApplicationController
     # modifica (da parte di chi?) una categoria id
     def edit  # /categories/:id/edit
         @category = Category.find(params[:id])
+        authorize! :update, @category, :message=>"You are not authorized to complete this action."
     end
 
     # questo metodo viene chiamato dopo il metodo #
@@ -47,6 +53,7 @@ class CategoriesController < ApplicationController
     def update  # /categories/:id
         id = params[:id]
         @category = Category.find(id)
+        authorize! :update, @category, :message=>"You are not authorized to complete this action."
         @category.update_attributes!(params[:category].permit(:name))
 		redirect_to categories_path
     end
@@ -54,7 +61,8 @@ class CategoriesController < ApplicationController
     # elimina la categoria id
     def destroy  # /categories/:id
         id = params[:id]
-		@category = Category.find(id)
+        @category = Category.find(id)
+        authorize! :destroy, @category, :message=>"You are not authorized to complete this action."
 		@category.destroy
 		redirect_to categories_path
     end 

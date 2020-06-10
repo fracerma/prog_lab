@@ -1,6 +1,5 @@
 class LocationsController < ApplicationController
     before_action :authenticate_user!
-
     def index_admin
         if current_user.is_admin?
             @locat = Location.all
@@ -24,10 +23,8 @@ class LocationsController < ApplicationController
     end
 
     def show
-        if @current_user.admin
-            logger.debug "qui"  
-            @location = Location.where(id: params[:id])[0]
-            logger.debug @location
+        if current_user.is_admin?
+            @location = Location.find(params[:id])
         else 
             @location = Location.where(status: "accepted", id: params[:id])[0]
         end
@@ -76,28 +73,29 @@ class LocationsController < ApplicationController
     #Devi passare un array che contiene l-id di location e l-id di category 
     #cosi lo cerchi dentro type e se non esiste la categoria indicata dentro type,  vuol dire 
     #che il locale indicato non gli appartiene e quindi aggiungi la tupla. 
-    def edit 
+    def edit   
+
         @update_loc = Location.find(params[:id])
+        authorize! :update, @update_loc, :message=>"You are not authorized to complete this action."
         @cats = @update_loc.categories
         @categories = Category.all
+        @status_array = ["accepted", "pending", "rejected"]
     end 
 
     #Manca autenticazione admin
     def destroy 
-        id = params[:id]
-        @location = Location.find(id)      
-        @location.destroy
-        if $admin == true
+            id = params[:id]
+            @location = Location.find(id) 
+            authorize! :destroy, @location, :message=>"You are not authorized to complete this action."     
+            @location.destroy
             redirect_to index_admin_path
-        else 
-            redirect_to locations_path
-        end
     end
 
     #Manca autenticazione admin
     def update
         @update_loc = Location.where(id: params[:id]).first
-        @update_loc.update_attributes(name: params[:locations][:name], lat: params[:locations][:lat], long: params[:locations][:long], foto: params[:locations][:foto])
+        authorize! :update, @update_loc, :message=>"You are not authorized to complete this action."
+        @update_loc.update_attributes(name: params[:locations][:name], lat: params[:locations][:lat], long: params[:locations][:long], foto: params[:locations][:foto], status: params[:status])
         @allCats = params[:categ]
         @tmp = []
         @allCats.each do |c|
@@ -105,11 +103,13 @@ class LocationsController < ApplicationController
         end
             
         @update_loc.categories = @tmp
-        @update_loc.update_attributes(status: "pending")
         redirect_to location_path(@update_loc)
     end
 
     def accept
+        if !current_user.is_admin?
+            redirect_to locations_path
+        end
         @list = Location.where(status: "pending")
         @noList = "Non ci sono locali da accettare"
     end
@@ -129,7 +129,6 @@ class LocationsController < ApplicationController
                     @a.update_attributes(status: "accepted")
                 end
             end
-            
         end
         redirect_to index_admin_path
     end

@@ -15,7 +15,7 @@
             <br>
             <strong>Email:</strong> <%= current_user.email %>
             <br>
-            <strong>Role:</strong> <%= current_user.role %>  
+            <strong>Role:</strong> <%= User::ROLES[current_user.roles_mask-1] %>  
         </div>
         <div>
             <%= link_to  "Edit Profile", edit_user_path, class: "btn btn-primary" %>
