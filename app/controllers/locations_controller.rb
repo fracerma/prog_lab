@@ -1,9 +1,5 @@
 class LocationsController < ApplicationController
     before_action :authenticate_user!
-    
-    skip_before_action :verify_authenticity_token
-    
-    $admin = false
     def index_admin
         if current_user.is_admin?
             @locat = Location.all
@@ -13,8 +9,11 @@ class LocationsController < ApplicationController
     end
 
     def index
-        @location = Location.where(status: "accepted")
-        
+        if current_user.is_owner?
+            @location = current_user.my_locations
+        else
+            @location = Location.where(status: "accepted")
+        end
     end
 
     def new 
@@ -29,6 +28,7 @@ class LocationsController < ApplicationController
         else 
             @location = Location.where(status: "accepted", id: params[:id])[0]
         end
+        
         @cats = []
         if @location != nil
             @location.categories.each do |c|
@@ -37,7 +37,6 @@ class LocationsController < ApplicationController
         end
     end 
 
-    #Manca autenticazione admin
     def create
         if  !Location.where(name: params[:locations][:name], name: params[:locations][:lat], name: params[:locations][:long] ).empty?
             render html: "Il locale che stai cercango di aggiungere gia' esiste"
@@ -133,4 +132,27 @@ class LocationsController < ApplicationController
         end
         redirect_to index_admin_path
     end
+
+    def addto_favloc
+        id = params[:id]
+        @loc = Location.find(id)
+        if(!current_user.locations.include?(@loc))
+            current_user.locations << @loc
+        end
+        redirect_to locations_path
+    end
+
+    def deletefrom_favloc
+        id = params[:id]
+        @loc=Location.find(id)
+        if(current_user.locations.include?(@loc))
+            current_user.locations.delete(@loc)
+        end
+        redirect_to locations_path
+    end
+
+    def index_favloc
+        @locations=@current_user.locations
+    end
+
 end

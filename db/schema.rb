@@ -72,20 +72,10 @@ ActiveRecord::Schema.define(version: 2020_06_06_175100) do
     t.string "street"
     t.string "foto"
     t.string "status"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "reviews", force: :cascade do |t|
-    t.integer "vote"
-    t.text "comment"
-    t.date "date"
-    t.bigint "users_id"
-    t.bigint "locations_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["locations_id"], name: "index_reviews_on_locations_id"
-    t.index ["users_id"], name: "index_reviews_on_users_id"
+    t.index ["user_id"], name: "index_locations_on_user_id"
   end
 
   create_table "types", force: :cascade do |t|
@@ -105,6 +95,8 @@ ActiveRecord::Schema.define(version: 2020_06_06_175100) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "provider"
+    t.string "uid"
     t.integer "roles_mask"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

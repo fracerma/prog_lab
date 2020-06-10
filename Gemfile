@@ -65,3 +65,6 @@ gem 'devise'
 
 gem 'canard', '~> 0.5.0.pre'
 gem 'rspec'
+# devise: gem used for authentication 
+# devise manages authentication via OAuth (facebook) through this special module/gem: 
+gem 'omniauth-facebook'

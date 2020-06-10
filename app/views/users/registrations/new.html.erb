@@ -1,29 +1,44 @@
-<h2>Sign up</h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  <div class="image_cover">
+    <%= image_tag  "pub.jpg" %>
   </div>
+<div class="form">
+  <h2>Sign up</h2>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    
+    <p id=”alert”><%= alert %></p>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+    <div class="field">
+      <%= f.label :name %><br />
+      <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+    </div>
+    <div class="field">
+      <%= f.label :email %><br />
+      <%= f.email_field :email, autocomplete: "email" %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
+    <div class="field">
+      <%= f.label :password %>
+      <% if @minimum_password_length %>
+      <br>
+      <em>(Minimum <%= @minimum_password_length %> characters, one upper case,<br> one number and one special character)</em>
+      <% end %><br />
+      <%= f.password_field :password, autocomplete: "new-password" %>
+    </div>
 
-<%= render "users/shared/links" %>
+    <div class="field">
+      <%= f.label :password_confirmation %><br />
+      <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    </div>
+    <div class="field">
+      <%= f.label :roles_mask %><br />
+      <%= f.select(:roles_mask, [['User', 1], ['Owner', 2]]) %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "Sign up",class:"btn btn-primary" %>
+      <br>
+        <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path, class:"btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
