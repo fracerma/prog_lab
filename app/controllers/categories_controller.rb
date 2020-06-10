@@ -29,14 +29,19 @@ class CategoriesController < ApplicationController
 
     def create_fav_categories
         @categ = params[:categ]
+        if !current_user.is_user?
+            @categ = nil
+        end
         if @categ != nil
             @fav_cats = []
             @categ.each do |c|
                 @fav_cats.append(Category.find(c))
             end  
+            #authorize! :create_fav_categories, current_user.categories, :message=>"You are not authorized to complete this action."
             current_user.categories = @fav_cats
         end 
         current_user.save
+        #redirect_to create_fav_categories_path      
     end
 
     # modifica (da parte di chi?) una categoria id
