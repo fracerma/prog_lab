@@ -22,8 +22,8 @@
           <td><%= check_box_tag 'categ[]', cat.id %></td>
         <%end%>
         <td><%=  cat.name -%>&nbsp;</td>
-        <%if current_user.is_admin?%>   
           <td><%= link_to "Show", cat %>&nbsp; </td>
+          <%if current_user.is_admin?%> 
           <td><%= link_to "Edit", edit_category_path(cat) %>&nbsp; </td>
           <td><%= link_to "Destroy", cat, method: :delete, data: { confirm: "Are you sure?" } %></td>
           <td> <hr> </td>
@@ -42,7 +42,7 @@
 <% end -%>
 
 <br>
-<%if current_user.is_owner?%>   
+<%if current_user.is_user?%>   
 <h2> See your favourites categories here: </h2>
 <%= link_to  "Your Favourites Categories", create_fav_categories_path %>
 <%end%>
