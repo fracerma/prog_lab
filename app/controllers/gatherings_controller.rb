@@ -5,7 +5,7 @@ class GatheringsController < ApplicationController
 
     # lista delle uscite dell'utente
     def index 
-        @user = @current_user
+        @user = current_user
         @gatherings = @user.gatherings
     end
 

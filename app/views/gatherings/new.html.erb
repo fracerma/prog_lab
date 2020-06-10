@@ -11,7 +11,7 @@
 
     <p>
         <h5> CHOOSE WHO YOU WANT TO INVITE: <h5>
-        <% @current_user.friends.each do |friend| %>
+        <% current_user.friends.each do |friend| %>
             <%= check_box_tag 'partecipants[]', friend.id -%>
             <%= friend.name -%>
         <% end %>
