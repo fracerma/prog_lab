@@ -10,7 +10,7 @@ class LocationsController < ApplicationController
 
     def index
         if current_user.is_owner?
-            @location = current_user.my_locations
+            @location= current_user.my_locations
         else
             @location = Location.where(status: "accepted")
         end
@@ -55,6 +55,7 @@ class LocationsController < ApplicationController
             @newLoc.street="#{params[:locations][:street]}, " << "#{params[:locations][:city]}"
            
             @newLoc.update_attributes(status: "pending")
+            @newLoc.user=current_user
             @array = params[:categ]
             if @array != nil
                 @arr = []

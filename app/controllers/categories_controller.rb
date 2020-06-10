@@ -1,7 +1,6 @@
 class CategoriesController < ApplicationController
     # :authenticate_user! ->  metodo di supporto fornito fornito da devise 
-    #before_action :authenticate_user!
-    # before_action :is_admin, except: [:index, :show] cancellato MOMENTANEAMENTE, DA RIMUOVERE
+    before_action :authenticate_user!
 
     # lista di tutte le categorie
     def index # /categories
@@ -16,8 +15,8 @@ class CategoriesController < ApplicationController
     end 
 
     def new  # /categories/new
-        authorize! :create, @category, :message=>"You are not authorized to complete this action."
         @category = Category.new
+        authorize! :create, @category, :message=>"You are not authorized to complete this action."
 
     end 
 
@@ -29,18 +28,15 @@ class CategoriesController < ApplicationController
 
 
     def create_fav_categories
-        #render html: 'ciao'
         @categ = params[:categ]
         if @categ != nil
             @fav_cats = []
             @categ.each do |c|
                 @fav_cats.append(Category.find(c))
             end  
-            authorize! :create, @fav_cats, :message=>"You are not authorized to complete this action."
-            @current_user.categories = @fav_cats
+            current_user.categories = @fav_cats
         end 
-        @current_user.save
-        #redirect_to create_fav_categories_path      
+        current_user.save
     end
 
     # modifica (da parte di chi?) una categoria id
