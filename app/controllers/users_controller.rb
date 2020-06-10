@@ -43,6 +43,11 @@ class UsersController < ApplicationController
         redirect_to user_friends_path
     end
 
+    def destroy
+        current_user.destroy
+        redirect_to root_path
+    end
+
     
 
 end
