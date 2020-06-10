@@ -13,8 +13,12 @@
       <tr>
         <td><%= gathering.id %>  &nbsp;</td>
         <td><%= link_to "Show", gathering_path(gathering)  %>  &nbsp; </td>
-        <td><%= link_to "Edit", edit_gathering_path(gathering) %>  &nbsp; </td>
-        <td><%= link_to "Destroy", gathering_path(gathering), method: :delete, data: { confirm: "Are you sure?" } %></td>
+        <% if can? :update, gathering %>
+          <td><%= link_to "Edit", edit_gathering_path(gathering) %>  &nbsp; </td>
+        <% end %>
+        <% if can? :destroy, gathering %>
+          <td><%= link_to "Destroy", gathering_path(gathering), method: :delete, data: { confirm: "Are you sure?" } %></td>
+        <% end %>
         
         <td> <hr> </td>
       </tr>
@@ -23,5 +27,6 @@
 </table>
  
 <br>
- 
-<%= link_to "New gathering", new_gathering_path %>
+<% if can? :create, Gathering %>
+  <%= link_to "New gathering", new_gathering_path %>
+<% end %>

@@ -27,16 +27,18 @@
 </p>
 
 <!-- TODO ruoli-->
-<%if !@current_user.locations.include?(@location)%>
+<%if current_user.is_user?%>
+<%if !current_user.locations.include?(@location)%>
   <%= link_to "Add to favourites locations", add_favloc_path(@location.id) %>
   <%else%>
   <%= link_to "Delete from favourites locations", delete_favloc_path(@location.id), method: :delete %>
+<%end%>
 <%end%>
 
 <br/>            
 <%= link_to "Back to home locations", locations_path %>
 
-<% if  $admin == true %>
+<% if  current_user.is_admin? %>
 <br/>
 <%= link_to "Home Locations Admin", index_admin_path %>
 <%end%>

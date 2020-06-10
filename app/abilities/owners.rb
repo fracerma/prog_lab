@@ -1,5 +1,7 @@
 Canard::Abilities.for(:owner) do
-  can [:read], Category
+  can [:show], Category
   cannot [:create,:delete,:update], Category
-  can [:create, :read, :update, :destroy], Location
+  can [:create, :show, :update, :destroy], Location
+  cannot [:create,:show,:delete,:update], Gathering
+
 end

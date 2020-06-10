@@ -18,12 +18,13 @@ class LocationsController < ApplicationController
 
     def new 
         @newLoc = Location.new
+        authorize! :create, @newLoc, :message=>"You are not authorized to complete this action."
         @categories = Category.all
         @noCats = "Non ci sono categorie disponibili"
     end
 
     def show
-        if current_user.is_admin?
+        if current_user.is_admin? || current_user.is_owner?
             @location = Location.find(params[:id])
         else 
             @location = Location.where(status: "accepted", id: params[:id])[0]
@@ -50,6 +51,7 @@ class LocationsController < ApplicationController
             @long=@res[0]['lon']
         
             @newLoc = Location.new(params.require(:locations).permit(:name, :foto))
+            authorize! :create, @newLoc, :message=>"You are not authorized to complete this action."
             @newLoc.lat=@lat
             @newLoc.long=@long
             @newLoc.street="#{params[:locations][:street]}, " << "#{params[:locations][:city]}"
@@ -64,6 +66,9 @@ class LocationsController < ApplicationController
                 end
                 @newLoc.categories = @arr
             end
+
+            @newLoc.user = current_user
+            
             @newLoc.save
             
             redirect_to locations_path  
@@ -75,7 +80,6 @@ class LocationsController < ApplicationController
     #cosi lo cerchi dentro type e se non esiste la categoria indicata dentro type,  vuol dire 
     #che il locale indicato non gli appartiene e quindi aggiungi la tupla. 
     def edit   
-
         @update_loc = Location.find(params[:id])
         authorize! :update, @update_loc, :message=>"You are not authorized to complete this action."
         @cats = @update_loc.categories
@@ -139,6 +143,9 @@ class LocationsController < ApplicationController
         @loc = Location.find(id)
         if(!current_user.locations.include?(@loc))
             current_user.locations << @loc
+        end
+        if !current_user.is_user?
+            current_user.locations=[]
         end
         redirect_to locations_path
     end
