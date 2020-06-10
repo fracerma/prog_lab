@@ -2,7 +2,7 @@
     <%= image_tag  "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Casa_Classic_Cocktail_Bar_%26_Jazz_Club_by_Roland_Barrera.jpg/1280px-Casa_Classic_Cocktail_Bar_%26_Jazz_Club_by_Roland_Barrera.jpg" %>
 </div>
 <div class="content">
-    <% if false %>
+    <% if current_user.is_admin? %>
             <div class="section">
                 <h1> Manage Locations </h1>
                 <h5> Lorem Ipsum is simply dummy text of the printing and 
@@ -17,7 +17,14 @@
                 </h5>
                 <%=link_to "Accept",accept_path, class: "btn btn-danger"%>
             </div>
-    <% elsif false %> <!--TODO ruolo che può aggiungere le locations-->
+            <div class="section">
+                <h1> Manage Categories </h1>
+                <h5> Lorem Ipsum is simply dummy text of the printing and 
+                    typesetting industry. Lorem Ipsum has been the industry's 
+                </h5>
+                <%=link_to "Categories",categories_path, class: "btn btn-danger"%>
+            </div>
+    <% elsif current_user.is_owner?  %> <!--TODO ruolo che può aggiungere le locations-->
             <div class="section">
                 <h1> Add a Location </h1>
                 <h5> Lorem Ipsum is simply dummy text of the printing and 

@@ -5,12 +5,17 @@ class GatheringsController < ApplicationController
 
     # lista delle uscite dell'utente
     def index 
-        @user = @current_user
+<<<<<<< HEAD
+        @gatherings = current_user.gatherings
+=======
+        @user = current_user
         @gatherings = @user.gatherings
+>>>>>>> 4f13a1c3bf5aadf807cadd63e2c82895e49c8b41
     end
 
     def create 
         @gathering=Gathering.new(date: params[:date])
+        authorize! :create, @gathering, :message=>"You are not authorized to complete this action."
         params[:partecipants].each do |part|
             @gathering.users << User.find(part)
         end 
@@ -30,11 +35,13 @@ class GatheringsController < ApplicationController
     # modifica le informazioni di un'uscita
     def edit 
         @gathering = Gathering.find(params[:id])
+        authorize! :update, @gathering, :message=>"You are not authorized to complete this action."
     end
 
     def update
         @location = Location.find(params[:location])
         @gathering=Gathering.find(params[:id])
+        authorize! :update, @gathering, :message=>"You are not authorized to complete this action."
         @gathering.update_attributes!(date: params[:date])
         @gathering.update_attributes!(location: @location)
 		redirect_to gathering_path(@gathering)
@@ -43,7 +50,8 @@ class GatheringsController < ApplicationController
     # elimina l'uscita con quell'id
     def destroy 
         id = params[:id]
-		@gathering = Gathering.find(id)
+        @gathering = Gathering.find(id)
+        authorize! :destroy, @gathering, :message=>"You are not authorized to complete this action."
 		@gathering.destroy
 		redirect_to gatherings_path
     end 
@@ -54,10 +62,10 @@ class GatheringsController < ApplicationController
         index=0
         @partecipants = params[:partecipants]
         if(@partecipants)
-            puts @partecipants[@partecipants.length] = @current_user.id
+            puts @partecipants[@partecipants.length] = current_user.id
         else
             @partecipants = []
-            puts @partecipants[0] = @current_user.id
+            puts @partecipants[0] = current_user.id
         end
         @locations = Location.all 
         @matching_loc = search_match(@partecipants)
@@ -66,6 +74,7 @@ class GatheringsController < ApplicationController
 
     def update_location
         @gathering = Gathering.find(params[:id])
+        authorize! :update, @gathering, :message=>"You are not authorized to complete this action."
         if(params[:adduser])
             params[:adduser].each do |user|
                 if(!(@gathering.users.include?(user)))

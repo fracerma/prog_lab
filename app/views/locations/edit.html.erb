@@ -35,11 +35,22 @@
 <%else%>
 <h3>Non vi sono categorie</h3>
 <%end%>
+<br/>
+<h4>Status:</h4>
+  <% @status_array.each do |s| %>
+    <% if s == @update_loc.status %>
+      <%= radio_button_tag(:status, s, true)%>
+    <% else %>
+      <%= radio_button_tag(:status, s)%>
+    <% end %>
+    <%=  s %>
+    <br/>
+  <% end %>
 
 
-
+<br/>
 <%= submit_tag "Update" %>
-
+<br/>
 <% end -%>
 <br/>
 <%= link_to "Home Locations", locations_path %>

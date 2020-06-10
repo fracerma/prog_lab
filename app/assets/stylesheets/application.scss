@@ -23,3 +23,31 @@
     margin: 0;
     overflow: hidden;
  }
+ 
+ .nav{
+   top: 0;
+   z-index: 2;
+   width: 100%;
+   height: fit-content;
+   background-color: white;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   
+   -webkit-box-shadow: 0px 0px 116px -22px rgba(0,0,0,1);
+   -moz-box-shadow: 0px 0px 116px -22px rgba(0,0,0,1);
+   box-shadow: 0px 0px 116px -22px rgba(0,0,0,1);
+
+   div{
+       margin: 20px;
+       a{
+           font-size: 2em;
+       }
+   }
+
+   img{
+       height: 90px;
+   }
+   
+}
+

@@ -7,6 +7,7 @@ class CreateLocations < ActiveRecord::Migration[5.2]
       t.string :street
       t.string :foto
       t.string :status
+      t.belongs_to :user
 
       t.timestamps
     end
