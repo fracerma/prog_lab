@@ -32,7 +32,7 @@
     </div>
     <div class="field">
       <%= f.label :role %><br />
-      <%= f.collection_select :role, User::ROLES, :to_s, :humanize %>
+      <%= f.select( :role, [['User', 'user'],['Owner', 'owner']]) %>
     </div>
 
     <div class="actions">

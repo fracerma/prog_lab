@@ -11,7 +11,7 @@ class LocationsController < ApplicationController
 
     def index
         if current_user.is_owner?
-            @locations
+            @location= current_user.my_locations
         else
             @location = Location.where(status: "accepted")
         end

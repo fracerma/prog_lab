@@ -26,7 +26,7 @@
         </div>
     </div>
     <!--TODO aggiungi ruolo guida-->
-    <%if !(current_user.is_admin?||current_user.is_owner?)%> 
+    <%if current_user.is_user?%> 
         <div class="friend_section">
             <div class="user_add">
                 <h1> Your friends</h1>

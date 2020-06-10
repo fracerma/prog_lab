@@ -10,34 +10,46 @@
   </thead>
  
   <tbody>
-  <h2><label for = 'cat'>Choose your favourites categories:</label></h2>
-  <%= form_tag :action => 'create_fav_categories' do %>
+    <%if current_user.is_user?%>
+      <h2><label for = 'cat'>Choose your favourites categories:</label></h2>
+    <%end%>
+    <%= form_tag :action => 'create_fav_categories' do %>
 
     <% if !@categories.empty? %>
     <% @categories.each do |cat| %>
-      <tr>       
-        <td><%= check_box_tag 'categ[]', cat.id %></td>        
+      <tr>
+        <%if current_user.is_user?%>       
+          <td><%= check_box_tag 'categ[]', cat.id %></td>
+        <%end%>
         <td><%=  cat.name -%>&nbsp;</td>
-        <td><%= link_to "Show", cat %>&nbsp; </td>
-        <td><%= link_to "Edit", edit_category_path(cat) %>&nbsp; </td>
-        <td><%= link_to "Destroy", cat, method: :delete, data: { confirm: "Are you sure?" } %></td>
-        <td> <hr> </td>
+        <%if current_user.is_admin?%>   
+          <td><%= link_to "Show", cat %>&nbsp; </td>
+          <td><%= link_to "Edit", edit_category_path(cat) %>&nbsp; </td>
+          <td><%= link_to "Destroy", cat, method: :delete, data: { confirm: "Are you sure?" } %></td>
+          <td> <hr> </td>
+        <%end%>
       </tr>
     <% end %>
     <% else %>
     <br/>
     <%= @noCats %>
   <%end%>
+  </tbody>
 </table>
-
-<%= submit_tag "Add Categories" %>
+  <%if current_user.is_owner?%>   
+    <%= submit_tag "Add Categories" %>
+  <%end%>
 <% end -%>
 
 <br>
+<%if current_user.is_owner?%>   
 <h2> See your favourites categories here: </h2>
 <%= link_to  "Your Favourites Categories", create_fav_categories_path %>
-</tbody>
+<%end%>
+
 
 <br>
  <hr>
-<%= link_to "New category", new_category_path %>
+  <%if current_user.is_admin?%>   
+    <%= link_to "New category", new_category_path %>
+  <%end%>
