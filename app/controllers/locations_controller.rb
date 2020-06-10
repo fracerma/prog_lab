@@ -55,6 +55,7 @@ class LocationsController < ApplicationController
             @newLoc.street="#{params[:locations][:street]}, " << "#{params[:locations][:city]}"
            
             @newLoc.update_attributes(status: "pending")
+            @newLoc.user=current_user
             @array = params[:categ]
             if @array != nil
                 @arr = []

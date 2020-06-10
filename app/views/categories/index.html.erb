@@ -36,7 +36,7 @@
   <%end%>
   </tbody>
 </table>
-  <%if current_user.is_owner?%>   
+  <%if current_user.is_user?%>   
     <%= submit_tag "Add Categories" %>
   <%end%>
 <% end -%>

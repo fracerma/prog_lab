@@ -4,6 +4,7 @@
     <% @current_user.categories.each do |cat| %>     
         <%=  cat.name -%>&nbsp;<br></td>    
     <% end %>
+    <%= link_to  "Modify your categories", categories_path %>
     <% else %>
     <p> There are no favourite categories. </p>
-  <%end%>
+<%end%>
