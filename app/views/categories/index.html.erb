@@ -19,8 +19,15 @@
         <td><%= check_box_tag 'categ[]', cat.id %></td>        
         <td><%=  cat.name -%>&nbsp;</td>
         <td><%= link_to "Show", cat %>&nbsp; </td>
-        <td><%= link_to "Edit", edit_category_path(cat) %>&nbsp; </td>
-        <td><%= link_to "Destroy", cat, method: :delete, data: { confirm: "Are you sure?" } %></td>
+
+        <% if can? :update, cat %>
+          <td><%= link_to "Edit", edit_category_path(cat) %>&nbsp; </td>
+        <%end%>
+
+        <% if can? :destroy, cat %>
+          <td><%= link_to "Destroy", cat, method: :delete, data: { confirm: "Are you sure?" } %></td>
+        <%end%>
+
         <td> <hr> </td>
       </tr>
     <% end %>
@@ -31,13 +38,15 @@
 </table>
 
 <%= submit_tag "Add Categories" %>
-<% end -%>
+
 
 <br>
 <h2> See your favourites categories here: </h2>
 <%= link_to  "Your Favourites Categories", create_fav_categories_path %>
 </tbody>
-
+<% end -%>
 <br>
  <hr>
-<%= link_to "New category", new_category_path %>
+<% if current_user.is_admin? %>
+  <%= link_to "New category", new_category_path %>
+<% end -%>
