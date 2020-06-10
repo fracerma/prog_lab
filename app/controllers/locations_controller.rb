@@ -140,7 +140,7 @@ class LocationsController < ApplicationController
         if(!current_user.locations.include?(@loc))
             current_user.locations << @loc
         end
-        redirect_to locations_path
+        redirect_to index_favloc_path
     end
 
     def deletefrom_favloc
@@ -153,7 +153,7 @@ class LocationsController < ApplicationController
     end
 
     def index_favloc
-        @locations=@current_user.locations
+        @locations=current_user.locations
     end
 
 end
