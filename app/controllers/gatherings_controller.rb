@@ -5,8 +5,10 @@ class GatheringsController < ApplicationController
 
     # lista delle uscite dell'utente
     def index 
-        @user = current_user
-        @gatherings = @user.gatherings
+        @gatherings = current_user.gatherings
+        if !current_user.is_user?
+            redirect_to root_path
+        end
     end
 
     def create 
@@ -58,10 +60,10 @@ class GatheringsController < ApplicationController
         index=0
         @partecipants = params[:partecipants]
         if(@partecipants)
-            puts @partecipants[@partecipants.length] = @current_user.id
+            puts @partecipants[@partecipants.length] = current_user.id
         else
             @partecipants = []
-            puts @partecipants[0] = @current_user.id
+            puts @partecipants[0] = current_user.id
         end
         @locations = Location.all 
         @matching_loc = search_match(@partecipants)

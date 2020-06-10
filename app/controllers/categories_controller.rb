@@ -29,6 +29,9 @@ class CategoriesController < ApplicationController
 
     def create_fav_categories
         @categ = params[:categ]
+        if !current_user.is_user?
+            @categ = nil
+        end
         if @categ != nil
             @fav_cats = []
             @categ.each do |c|

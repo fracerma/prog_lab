@@ -17,6 +17,13 @@
                 </h5>
                 <%=link_to "Accept",accept_path, class: "btn btn-danger"%>
             </div>
+            <div class="section">
+                <h1> Manage Categories </h1>
+                <h5> Lorem Ipsum is simply dummy text of the printing and 
+                    typesetting industry. Lorem Ipsum has been the industry's 
+                </h5>
+                <%=link_to "Categories",categories_path, class: "btn btn-danger"%>
+            </div>
     <% elsif current_user.is_owner?  %> <!--TODO ruolo che può aggiungere le locations-->
             <div class="section">
                 <h1> Add a Location </h1>

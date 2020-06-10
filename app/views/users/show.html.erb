@@ -26,7 +26,7 @@
         </div>
     </div>
     <!--TODO aggiungi ruolo guida-->
-    <%if (current_user.is_user?)%> 
+    <%if current_user.is_user?%> 
         <div class="friend_section">
             <div class="user_add">
                 <h1> Your friends</h1>
@@ -38,6 +38,11 @@
                 <h5> <cite>Good friends know the exact number of drinks you can handle before you makes poor choices. </cite>&#x1F609</h5>
                 <%= link_to  "Find friends", users_all_path, class: "btn btn-secondary" %>
             </div>
+             <div class="user_add">
+                    <h1> Your favourites Categories</h1>
+                    <h5> <cite>Good friends know the exact number of drinks you can handle before you makes poor choices. </cite>&#x1F609</h5>
+                    <%= link_to  "Your Categories", fav_categories_path, class: "btn btn-primary" %>
+             </div>
         </div>
     <% end %>
     </div>

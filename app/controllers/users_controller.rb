@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    #before_action :authenticate_user!, except: [:new, :create]
+    before_action :authenticate_user!, except: [:new, :create]
     def show
     end
 
@@ -28,6 +28,7 @@ class UsersController < ApplicationController
         new_friend=User.find(params[:id])
         if(!current_user.friends.include? new_friend)
             current_user.friends<<new_friend
+            new_friend.friends<<current_user
             redirect_to user_friends_path
         else
             redirect_to user_all_path
