@@ -80,7 +80,7 @@ Given /^a logged in user$/ do
   Given "a valid user"
   visit signin_url
   fill_in "Email", :with => "test@hotmail.com"
-  fill_in "Password", :with => "12345678"
+  fill_in "Password", :with => "Tester12!"
   click_button "Login"
 end
 
