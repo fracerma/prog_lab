@@ -4,8 +4,8 @@ Scenario: Choose favourite categories
 
 Given a valid user 
 When I am on the login page 
-And I fill in "user_email" with "test@gmail.com"
-And I fill in "user_password" with "PasswordTester1!"
+And I fill in "user_email" with "test@hotmail.com"
+And I fill in "user_password" with "Tester12!"
 And I press "Log in"
 Then I should be on the home page
 
