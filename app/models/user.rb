@@ -64,7 +64,4 @@ class User < ApplicationRecord
             end
         end
     end 
-    def is_my_fav_locations(loc)
-        
-    end
 end

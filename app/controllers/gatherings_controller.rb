@@ -57,17 +57,19 @@ class GatheringsController < ApplicationController
 #metodo che genera le location per un gathering da creare
     def generate_locations
         @matching_loc = []
-        index=0
         @partecipants = params[:partecipants]
-        if(@partecipants)
+        if(@partecipants&&params[:date])
             puts @partecipants[@partecipants.length] = current_user.id
+            @matching_loc = Location.search_match(@partecipants)
+            @date = params[:date]
         else
-            @partecipants = []
-            puts @partecipants[0] = current_user.id
+            if(!params[:date])
+                 flash[:alert]="Should select the date"
+            else 
+                flash[:alert]="Should select at least one friend"
+            end
+            redirect_to new_gathering_path
         end
-        @locations = Location.all 
-        @matching_loc = search_match(@partecipants)
-        @date = params[:date]
     end 
 
     def update_location
@@ -101,28 +103,7 @@ class GatheringsController < ApplicationController
     end
 
 #metodo che dato un gruppo di utenti, seleziona tra i locali quelli che matchano con quegli utenti
-    def search_match(partecipants)
-        @locations = Location.all
-        @partecipants = partecipants
-        @matching_loc = []
-        index = 0
-        @locations.each do |loc|
-            okay=0
-            @partecipants.each do |part|
-                part = User.find(part)
-                if(! (loc.categories.include?(part.categories[0])) )
-                    okay=0
-                else 
-                    okay+=1
-                end
-            end
-            if(okay == @partecipants.length)
-                puts @matching_loc[index]=loc
-                index += 1
-            end
-        end
-        return @matching_loc
-    end
+    
 
 
 end
