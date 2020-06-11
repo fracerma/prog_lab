@@ -19,14 +19,21 @@ module NavigationHelpers
       '/locations'
     when /^the location page$/
       '/locations/'+ @location.id.to_s
-    when /^the login page$/
-      new_user_session_path
     when /^the index_favloc page$/
       '/users/locations'
     when /^the new gathering page$/
       '/gatherings/new'
     when /^the matching locations page$/
       '/gatherings/new/generate_locations'
+    when /^my profile page/
+      '/user'
+    when /^the login page/
+      '/users/sign_in'
+    when /^Favourite Categories page/
+      #'/categories/users/fav_categories'
+      '/categories'
+    when /^Choose Your Favourite Categories page/
+      '/categories'
 
 
     # Add more mappings here.

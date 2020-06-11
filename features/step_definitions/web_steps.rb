@@ -94,6 +94,32 @@ When /^I have added a friend$/ do
 end
 
 
+  Given /^a category$/ do 
+  @c1 = Category.create!({
+  :name => "Pizzeria"
+  })
+  end 
+
+  Given /^another category/ do 
+    @c2 = Category.create!({
+      :name => "Disco"
+      })
+  end 
+  
+  Given /^a third category/ do 
+    @c3 = Category.create!({
+      :name => "Japanese Restaurant"
+      })
+  end
+
+  When /^(?:|I )check a first "([^"]*)"$/ do |field|
+  check(field + @c1.id.to_s)
+  end
+
+  And /^(?:|I )check also "([^"]*)"$/ do |field|
+  check(field + @c2.id.to_s)
+  end
+
 # Single-line step scoper
 When /^(.*) within (.*[^:])$/ do |step, parent|
   with_scope(parent) { When step }
@@ -111,7 +137,6 @@ end
 When /^(?:|I )go to (.+)$/ do |page_name|
   visit path_to(page_name)
 end
-
 
 When /^(?:|I )press "([^"]*)"$/ do |button|
   click_button(button)
@@ -137,8 +162,6 @@ end
 #     | Note           | Nice guy   |
 #     | Wants Email?   |            |
 #
-#
-
 
 When /^(?:|I )fill in the following:$/ do |fields|
   fields.rows_hash.each do |name, value|
@@ -166,13 +189,22 @@ When /^(?:|I )attach the file "([^"]*)" to "([^"]*)"$/ do |path, field|
   attach_file(field, File.expand_path(path))
 end
 
+
 Then /^(?:|I )should see "([^"]*)"$/ do |text|
   if page.respond_to? :should
     page.should have_content(text)
   else
     assert page.has_content?(text)
+
+Then /^(?:|I )should see "([^"]*)" and "([^"]*)"$/ do |text1, text2|
+  if page.respond_to? :should
+    page.should have_content(text1)
+    page.should have_content(text2)
+  else
+    assert page.has_content?(text1)
+    assert page.has_content?(text2)
   end
-end
+
 
 Then /^(?:|I )should see \/([^\/]*)\/$/ do |regexp|
   regexp = Regexp.new(regexp)

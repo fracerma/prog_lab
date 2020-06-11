@@ -69,6 +69,7 @@ gem 'rspec'
 # devise manages authentication via OAuth (facebook) through this special module/gem: 
 gem 'omniauth-facebook'
 
+
 #per i test:
 group :test do
   gem 'cucumber-rails', :require => false
