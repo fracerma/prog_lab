@@ -152,7 +152,7 @@ class LocationsController < ApplicationController
         if !current_user.is_user?
             current_user.locations=[]
         end
-        redirect_to request.referrer
+        redirect_to index_favloc_path
     end
 
     def deletefrom_favloc

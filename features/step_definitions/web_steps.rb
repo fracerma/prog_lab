@@ -39,6 +39,21 @@ Given /^a valid user$/ do
             :password_confirmation => "Tester12!",
             :roles_mask=> 1
            })
+  @friend = User.create!({
+            :name=> "Friend",
+            :email => "friend@hotmail.com",
+            :password => "Friend12!",
+            :password_confirmation => "Friend12!",
+            :roles_mask=> 1
+           })
+  @categoryright = Category.create!({
+            :name => "pub"
+  })
+  @categorywrong = Category.create!({
+            :name => "cocktail bar"
+  })
+  @friend.categories << @categoryright
+  @user.categories << @categoryright
 end
 Given /^a valid location$/ do
   @location = Location.create!({
@@ -49,15 +64,36 @@ Given /^a valid location$/ do
             :status=>"accepted",
             :user_id=>@user.id
            })
+  @location.categories << @categoryright
+  @locationwrong = Location.create!({
+            :name=> "testlocwrong",
+            :long=> 12.442536,
+            :lat=>41.934376,
+            :street=> "Via San Godenzo, Roma",
+            :status=>"accepted",
+            :user_id=>@user.id
+           })
+  @locationwrong.categories << @categorywrong
 end
 
 Given /^a logged in user$/ do
   Given "a valid user"
   visit signin_url
-  fill_in "Email", :with => "minikermit@hotmail.com"
+  fill_in "Email", :with => "test@hotmail.com"
   fill_in "Password", :with => "12345678"
   click_button "Login"
 end
+
+
+When /^(?:|I )touch heart$/ do
+  find('#heart').click
+end
+
+When /^I have added a friend$/ do
+  @user.friends << @friend
+end
+
+
 # Single-line step scoper
 When /^(.*) within (.*[^:])$/ do |step, parent|
   with_scope(parent) { When step }
@@ -75,6 +111,7 @@ end
 When /^(?:|I )go to (.+)$/ do |page_name|
   visit path_to(page_name)
 end
+
 
 When /^(?:|I )press "([^"]*)"$/ do |button|
   click_button(button)
@@ -100,9 +137,9 @@ end
 #     | Note           | Nice guy   |
 #     | Wants Email?   |            |
 #
-# TODO: Add support for checkbox, select or option
-# based on naming conventions.
 #
+
+
 When /^(?:|I )fill in the following:$/ do |fields|
   fields.rows_hash.each do |name, value|
     When %{I fill in "#{name}" with "#{value}"}
