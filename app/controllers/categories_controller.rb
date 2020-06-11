@@ -36,13 +36,12 @@ class CategoriesController < ApplicationController
             if @categ != nil
                 @fav_cats = []
                 @categ.each do |c|
-                    @fav_cats.append(Category.find(c))
+                    @fav_cats.append(Category.find(c)[0])
                 end  
                 #authorize! :create_fav_categories, current_user.categories, :message=>"You are not authorized to complete this action."
                 current_user.categories = @fav_cats
             end 
             current_user.save
-            #redirect_to create_fav_categories_path 
         else 
             redirect_to root_path 
         end
