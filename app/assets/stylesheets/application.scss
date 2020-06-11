@@ -50,4 +50,47 @@
    }
    
 }
+.table-scroll{
+    margin: auto;
+    margin-top: 2%;
+    width: 60%;
+    min-height: fit-content;
+    max-height: 500px;
+    background-color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 30px;
+    .table-conteiner{
+        width:80%;
+        min-height: fit-content;
+        max-height: 300px;
+        overflow-y: auto;
+        margin: auto;
 
+    }
+    img{
+        height: 60px;
+    }
+    td{
+        vertical-align: middle;
+    }
+    ul{
+        list-style: none;
+    }
+    .list{
+        width: fit-content;
+        margin: auto;
+        text-align: left;
+    }
+}
+
+.btn-back{
+    background-color: white;
+    margin-top: 10px;
+    margin-left: 10px;
+    font-weight: bold;
+}
+.btn-back::before{
+    content:"<";
+}
+    

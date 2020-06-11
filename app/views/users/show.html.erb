@@ -15,13 +15,20 @@
             <br>
             <strong>Email:</strong> <%= current_user.email %>
             <br>
-            <strong>Role:</strong> <%= User::ROLES[current_user.roles_mask-1] %>  
+            <strong>Role:</strong> 
+            <%if current_user.roles_mask==1 %> 
+                User
+            <%elsif current_user.roles_mask==2%>
+                Owner
+            <%else%>
+                Admin
+            <%end%>
         </div>
         <div>
             <%= link_to  "Edit Profile", edit_user_path, class: "btn btn-primary" %>
         </div>
         <div>
-            <%= link_to  "DELETE PROFILE", user_path,:method => :delete, :data => {:confirm => "You sure?"},
+            <%= link_to  "DELETE PROFILE", user_path(:id=>current_user.id),:method => :delete, :data => {:confirm => "You sure?"},
                                         :title => "Delete #{current_user.name}",class: "btn btn-danger" %>
         </div>
     </div>

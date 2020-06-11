@@ -7,13 +7,9 @@ class UsersController < ApplicationController
     end
 
     def update
-        if(@current_user.update(params.require(:user).permit(:name,:email,:avatar)))
-            redirect_to root_path
-        else
-            flash[:alert]="Email is used!"
-            redirect_to edit_user_path
-        end
-
+        logger.debug "ciao"
+        new_user=current_user.update(params.require(:user).permit(:name,:email,:avatar))
+        redirect_to root_path
     end
 
     def index_friends
@@ -44,8 +40,14 @@ class UsersController < ApplicationController
     end
 
     def destroy
-        current_user.destroy
-        redirect_to root_path
+        curr_user_id=current_user.id
+        id_rmv=params[:id]
+        User.destroy(id_rmv)
+        if (id_rmv==curr_user_id)
+            redirect_to root_path
+        else
+            redirect_to users_all_path
+        end
     end
 
     

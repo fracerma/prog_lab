@@ -3,12 +3,13 @@
 </div>
 <div class="content">
     <% if current_user.is_admin? %>
+        <div class="conteiner">
             <div class="section">
                 <h1> Manage Locations </h1>
                 <h5> Lorem Ipsum is simply dummy text of the printing and 
                     typesetting industry. Lorem Ipsum has been the industry's 
                 </h5>
-                <%= link_to  "All Locations", index_admin_path, class: "btn btn-warning"  %>
+                <%= link_to  "All Locations", locations_path, class: "btn btn-warning"  %>
             </div>
             <div class="section">
                 <h1> Approve Locations </h1>
@@ -17,6 +18,8 @@
                 </h5>
                 <%=link_to "Accept",accept_path, class: "btn btn-danger"%>
             </div>
+        </div>
+        <div class="conteiner">
             <div class="section">
                 <h1> Manage Categories </h1>
                 <h5> Lorem Ipsum is simply dummy text of the printing and 
@@ -24,7 +27,16 @@
                 </h5>
                 <%=link_to "Categories",categories_path, class: "btn btn-danger"%>
             </div>
+            <div class="section">
+                <h1> Manage Users </h1>
+                <h5> Lorem Ipsum is simply dummy text of the printing and 
+                    typesetting industry. Lorem Ipsum has been the industry's 
+                </h5>
+                <%=link_to "All Users",users_all_path, class: "btn btn-warning"%>
+            </div>
+        </div>
     <% elsif current_user.is_owner?  %> <!--TODO ruolo che può aggiungere le locations-->
+    <div class="conteiner">
             <div class="section">
                 <h1> Add a Location </h1>
                 <h5> Lorem Ipsum is simply dummy text of the printing and 
@@ -39,7 +51,9 @@
                 </h5>
                 <%= link_to  "View your locations", locations_path, class: "btn btn-danger"  %>
             </div>
+    </div>
      <% else %>
+         <div class="conteiner">
             <div class="section">
                 <h1> New Gatherings </h1>
                 <h5><cite> "The problem with the world is that everyone is a few drinks behind." ~ Humphrey Bogart</cite> &#x1F919 
@@ -52,5 +66,20 @@
                 </h5>
                 <%= link_to  "View your gatherings", gatherings_path, class: "btn btn-danger"  %>
             </div>
+        </div>
+        <div class="conteiner">
+            <div class="section">
+                <h1> See are aviable Locations </h1>
+                <h5><cite> "The problem with the world is that everyone is a few drinks behind." ~ Humphrey Bogart</cite> &#x1F919 
+                </h5>
+                <%= link_to  "All locations",locations_path, class: "btn btn-danger"  %>
+            </div>
+            <div class="section">
+                <h1> Your favourites Locations </h1>
+                <h5> <cite> "The hard part about being a bartender is figuring out who is drunk and who is just stupid." ~ Richard Braunstein</cite> &#x1F64C
+                </h5>
+                <%= link_to  "View favourites", index_favloc_path, class: "btn btn-warning"  %>
+            </div>
+        </div>
      <%end%>
 </div>

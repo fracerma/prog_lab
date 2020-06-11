@@ -28,20 +28,18 @@ class User < ApplicationRecord
 
     validates :password, presence: true, format:PASSWORD_REQUIREMENTS, :if => :password
     
-    has_many :fav_locations
+    has_many :fav_locations, dependent: :destroy
     has_many :locations, :through => :fav_locations, :dependent => :destroy
 
     has_many :my_locations, :class_name => "Location"
 
-    has_many :fav_categories
+    has_many :fav_categories, dependent: :destroy
     has_many :categories, :through => :fav_categories, :dependent => :destroy
 
-    has_many :friendships  
+    has_many :friendships, dependent: :destroy
     has_many :friends, :through => :friendships
 
-    has_many :reviews
-
-    has_many :groups
+    has_many :groups, dependent: :destroy
     has_many :gatherings, :through => :groups
 
 
