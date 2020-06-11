@@ -57,7 +57,7 @@ class LocationsController < ApplicationController
             @newLoc.lat=@lat
             @newLoc.long=@long
             @newLoc.street="#{params[:locations][:street]}, " << "#{params[:locations][:city]}"
-           
+            @newLoc.user= current_user
             @newLoc.update_attributes(status: "pending")
             @newLoc.user=current_user
             @array = params[:categ]
@@ -152,7 +152,7 @@ class LocationsController < ApplicationController
         if !current_user.is_user?
             current_user.locations=[]
         end
-        redirect_to request.referrer
+        redirect_to index_favloc_path
     end
 
     def deletefrom_favloc

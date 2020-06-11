@@ -12,9 +12,19 @@ module NavigationHelpers
   #
   def path_to(page_name)
     case page_name
-
+      
     when /^the home\s?page$/
       '/'
+    when /^the locations page$/
+      '/locations'
+    when /^the location page$/
+      '/locations/'+ @location.id.to_s
+    when /^the index_favloc page$/
+      '/users/locations'
+    when /^the new gathering page$/
+      '/gatherings/new'
+    when /^the matching locations page$/
+      '/gatherings/new/generate_locations'
     when /^my profile page/
       '/user'
     when /^the login page/
@@ -28,7 +38,6 @@ module NavigationHelpers
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
-    #
     #   when /^(.*)'s profile page$/i
     #     user_profile_path(User.find_by_login($1))
 
