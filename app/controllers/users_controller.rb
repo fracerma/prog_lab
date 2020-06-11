@@ -7,7 +7,6 @@ class UsersController < ApplicationController
     end
 
     def update
-        logger.debug "ciao"
         new_user=current_user.update(params.require(:user).permit(:name,:email,:avatar))
         redirect_to root_path
     end
@@ -35,6 +34,7 @@ class UsersController < ApplicationController
         rem_friend=User.find(params[:id])
         if(current_user.friends.include? rem_friend)
             current_user.friends.delete(rem_friend)
+            rem_friend.friends.delete(current_user)
         end
         redirect_to user_friends_path
     end
