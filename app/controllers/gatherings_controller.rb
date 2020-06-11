@@ -6,6 +6,9 @@ class GatheringsController < ApplicationController
     # lista delle uscite dell'utente
     def index 
         @gatherings = current_user.gatherings
+        if !current_user.is_user?
+            redirect_to root_path
+        end
     end
 
     def create 

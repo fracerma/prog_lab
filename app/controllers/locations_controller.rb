@@ -11,19 +11,22 @@ class LocationsController < ApplicationController
     def index
         if current_user.is_owner?
             @location= current_user.my_locations
-        else
+        elsif current_user.is_user?
             @location = Location.where(status: "accepted")
+        else 
+            @location = Location.all
         end
     end
 
     def new 
         @newLoc = Location.new
+        authorize! :create, @newLoc, :message=>"You are not authorized to complete this action."
         @categories = Category.all
         @noCats = "Non ci sono categorie disponibili"
     end
 
     def show
-        if current_user.is_admin?
+        if current_user.is_admin? || current_user.is_owner?
             @location = Location.find(params[:id])
         else 
             @location = Location.where(status: "accepted", id: params[:id])[0]
@@ -50,6 +53,7 @@ class LocationsController < ApplicationController
             @long=@res[0]['lon']
         
             @newLoc = Location.new(params.require(:locations).permit(:name, :foto))
+            authorize! :create, @newLoc, :message=>"You are not authorized to complete this action."
             @newLoc.lat=@lat
             @newLoc.long=@long
             @newLoc.street="#{params[:locations][:street]}, " << "#{params[:locations][:city]}"
@@ -64,6 +68,9 @@ class LocationsController < ApplicationController
                 end
                 @newLoc.categories = @arr
             end
+
+            @newLoc.user = current_user
+            
             @newLoc.save
             
             redirect_to locations_path  
@@ -75,7 +82,6 @@ class LocationsController < ApplicationController
     #cosi lo cerchi dentro type e se non esiste la categoria indicata dentro type,  vuol dire 
     #che il locale indicato non gli appartiene e quindi aggiungi la tupla. 
     def edit   
-
         @update_loc = Location.find(params[:id])
         authorize! :update, @update_loc, :message=>"You are not authorized to complete this action."
         @cats = @update_loc.categories
@@ -89,21 +95,24 @@ class LocationsController < ApplicationController
             @location = Location.find(id) 
             authorize! :destroy, @location, :message=>"You are not authorized to complete this action."     
             @location.destroy
-            redirect_to index_admin_path
+            redirect_to locations_path
     end
 
     #Manca autenticazione admin
     def update
         @update_loc = Location.where(id: params[:id]).first
         authorize! :update, @update_loc, :message=>"You are not authorized to complete this action."
-        @update_loc.update_attributes(name: params[:locations][:name], lat: params[:locations][:lat], long: params[:locations][:long], foto: params[:locations][:foto], status: params[:status])
-        @allCats = params[:categ]
-        @tmp = []
-        @allCats.each do |c|
-            @tmp.append(Category.find(c))
-        end
-            
-        @update_loc.categories = @tmp
+        if current_user.is_admin?
+            @update_loc.update_attributes(status: params[:status])
+        else  
+            @update_loc.update_attributes(name: params[:locations][:name], foto: params[:locations][:foto])
+            @allCats = params[:categ]
+            @tmp = []
+            @allCats.each do |c|
+                @tmp.append(Category.find(c))
+            end
+            @update_loc.categories = @tmp
+        end  
         redirect_to location_path(@update_loc)
     end
 
@@ -131,7 +140,7 @@ class LocationsController < ApplicationController
                 end
             end
         end
-        redirect_to index_admin_path
+        redirect_to locations_path
     end
 
     def addto_favloc
@@ -140,7 +149,10 @@ class LocationsController < ApplicationController
         if(!current_user.locations.include?(@loc))
             current_user.locations << @loc
         end
-        redirect_to index_favloc_path
+        if !current_user.is_user?
+            current_user.locations=[]
+        end
+        redirect_to request.referrer
     end
 
     def deletefrom_favloc
@@ -149,11 +161,15 @@ class LocationsController < ApplicationController
         if(current_user.locations.include?(@loc))
             current_user.locations.delete(@loc)
         end
-        redirect_to locations_path
+        redirect_to request.referrer
     end
 
     def index_favloc
-        @locations=current_user.locations
+        if current_user.is_user?
+            @locations=current_user.locations
+        else 
+            redirect_to root_path
+        end
     end
 
 end

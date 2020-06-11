@@ -18,17 +18,17 @@
     </div>
 
     <div class="field">
-      <%= f.label :password %>
-      <% if @minimum_password_length %>
-      <br>
-      <em>(Minimum <%= @minimum_password_length %> characters, one upper case,<br> one number and one special character)</em>
-      <% end %><br />
+      <%= f.label :password %> <br>
       <%= f.password_field :password, autocomplete: "new-password" %>
     </div>
 
     <div class="field">
       <%= f.label :password_confirmation %><br />
       <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+      <% if @minimum_password_length %>
+      <br>
+      <em class="allert">(Minimum <%= @minimum_password_length %> characters, one upper case,<br> one number and one special character)</em>
+      <% end %>
     </div>
     <div class="field">
       <%= f.label :roles_mask %><br />
@@ -38,7 +38,7 @@
     <div class="actions">
       <%= f.submit "Sign up",class:"btn btn-primary" %>
       <br>
-        <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path, class:"btn btn-primary" %>
+        <%= link_to "Sign in with Facebook", user_facebook_omniauth_authorize_path, class:"btn btn-facebook" %>
     </div>
   <% end %>
 </div>

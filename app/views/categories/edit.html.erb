@@ -1,12 +1,13 @@
-<br>
-<h1> MODIFICA IL NOME DELLA CATEGORIA: <%= @category.name %> </h1>
-<br>
+<div class="image_cover">
+    <%= image_tag  "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Casa_Classic_Cocktail_Bar_%26_Jazz_Club_by_Roland_Barrera.jpg/1280px-Casa_Classic_Cocktail_Bar_%26_Jazz_Club_by_Roland_Barrera.jpg" %>
+</div>
 
-<%= form_for @category, :url => {:action => "update", :id => @category} do |c| %>
+<div class="table-scroll">
+    <h1> Modify name of category: <%= @category.name %> </h1>
+    <%= form_for @category, :url => {:action => "update", :id => @category} do |c| %>
 
-<p> Nuovo nome categoria: <%= c.text_field 'name' %></p>
+    <p> New name: <%= c.text_field 'name' %></p>
 
-<%= submit_tag "Modifica" %>
-<% end %>
-
-<%= link_to 'Back', {:action => 'index' } %>
+    <%= submit_tag "Modifica", class:"btn btn-primary" %>
+    <% end %>
+</div>
