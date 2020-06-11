@@ -144,13 +144,12 @@ class LocationsController < ApplicationController
     end
 
     def addto_favloc
-        id = params[:id]
-        @loc = Location.find(id)
-        if(!current_user.locations.include?(@loc))
-            current_user.locations << @loc
-        end
-        if !current_user.is_user?
-            current_user.locations=[]
+        if current_user.is_user?
+            id = params[:id]
+            @loc = Location.find(id)
+            if(!current_user.locations.include?(@loc))
+                current_user.locations << @loc
+            end
         end
         redirect_to index_favloc_path
     end
