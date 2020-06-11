@@ -11,8 +11,10 @@ class LocationsController < ApplicationController
     def index
         if current_user.is_owner?
             @location= current_user.my_locations
-        else
+        elsif current_user.is_user?
             @location = Location.where(status: "accepted")
+        else 
+            @location = Location.all
         end
     end
 
@@ -93,21 +95,24 @@ class LocationsController < ApplicationController
             @location = Location.find(id) 
             authorize! :destroy, @location, :message=>"You are not authorized to complete this action."     
             @location.destroy
-            redirect_to index_admin_path
+            redirect_to locations_path
     end
 
     #Manca autenticazione admin
     def update
         @update_loc = Location.where(id: params[:id]).first
         authorize! :update, @update_loc, :message=>"You are not authorized to complete this action."
-        @update_loc.update_attributes(name: params[:locations][:name], lat: params[:locations][:lat], long: params[:locations][:long], foto: params[:locations][:foto], status: params[:status])
-        @allCats = params[:categ]
-        @tmp = []
-        @allCats.each do |c|
-            @tmp.append(Category.find(c))
-        end
-            
-        @update_loc.categories = @tmp
+        if current_user.is_admin?
+            @update_loc.update_attributes(status: params[:status])
+        else  
+            @update_loc.update_attributes(name: params[:locations][:name], foto: params[:locations][:foto])
+            @allCats = params[:categ]
+            @tmp = []
+            @allCats.each do |c|
+                @tmp.append(Category.find(c))
+            end
+            @update_loc.categories = @tmp
+        end  
         redirect_to location_path(@update_loc)
     end
 
@@ -135,7 +140,7 @@ class LocationsController < ApplicationController
                 end
             end
         end
-        redirect_to index_admin_path
+        redirect_to locations_path
     end
 
     def addto_favloc
@@ -147,7 +152,7 @@ class LocationsController < ApplicationController
         if !current_user.is_user?
             current_user.locations=[]
         end
-        redirect_to locations_path
+        redirect_to request.referrer
     end
 
     def deletefrom_favloc
@@ -156,11 +161,15 @@ class LocationsController < ApplicationController
         if(current_user.locations.include?(@loc))
             current_user.locations.delete(@loc)
         end
-        redirect_to locations_path
+        redirect_to request.referrer
     end
 
     def index_favloc
-        @locations=@current_user.locations
+        if current_user.is_user?
+            @locations=current_user.locations
+        else 
+            redirect_to root_path
+        end
     end
 
 end

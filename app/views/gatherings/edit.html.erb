@@ -1,37 +1,65 @@
-<h1> CHANGE SOMETHING ABOUT  GATHERING <%= @gathering.id %> <h1>
+<div class="image_cover">
+    <%= image_tag  "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Casa_Classic_Cocktail_Bar_%26_Jazz_Club_by_Roland_Barrera.jpg/1280px-Casa_Classic_Cocktail_Bar_%26_Jazz_Club_by_Roland_Barrera.jpg" %>
+</div>
 
-<%= form_tag :action => 'update_location' do %>
-    <p>
-    
-        <h5> CHANGE THE DATE: <h5>
-        <%= date_field(:gathering, :date) %>
+<div class="table-scroll">
+    <h1> Change something of your gathering <h1>
 
-        <h5> ADD A FRIEND:<h5>
-        <% @current_user.friends.each do |friend| %>
-            <% if (!@gathering.users.include?(friend)) %> 
-                <%= check_box_tag 'adduser[]', friend.id -%>
-            <%= friend.name -%>
-            <% end %> 
-        <% end %> 
+    <%= form_tag :action => 'update_location' do %>
 
-        <h5> DELETE PARTECIPANTS:<h5>
-        <% @gathering.users.each do |user| %>
-                <%= check_box_tag 'deleteuser[]', user.id -%>
-                <% if user != @current_user%>
-                    <%= user.name -%>
-                <%else%>
-                    You
-                <% end  %>
-            <br>
-        <% end %> 
-    
-
-    <h5> EDIT YOUR PARTY:<h5>
-    <%= hidden_field_tag "id", @gathering.id %>
-    <%= submit_tag "Edit party"%>
-<% end %>
-<br>
-
-<%= link_to gatherings_path do %>
-   <button> GoBack </button>
-<% end %>
+            <h4> Change the date: <h4>
+            <%= date_field(:gathering, :date) %>
+            <div style="display:flex; justify-content:space-between">
+                <div style="width:50%">
+                    <h3> Add friends:</h3>
+                    <div class="table-conteiner" >
+                        <table class="table">
+                            <thead>
+                                <th scope="col">Name</th>
+                                <th scope="col">Select</th>
+                                </th>
+                            </thead>
+                            <tbody>
+                                <% @current_user.friends.each do |friend| %>
+                                    <tr>
+                                        <% if (!@gathering.users.include?(friend)) %> 
+                                            <td><%= friend.name -%></td>
+                                            <td><%= check_box_tag 'adduser[]', friend.id -%></td>
+                                        <% end %> 
+                                    </tr>
+                                <% end %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div style="width:50%">
+                    <h3> Delete partecipants:</h3>
+                    <div class="table-conteiner" >
+                        <table class="table">
+                            <thead>
+                                <th scope="col">Name</th>
+                                <th scope="col">Select</th>
+                                </th>
+                            </thead>
+                            <tbody>
+                                <% @gathering.users.each do |user| %>
+                                    <tr>
+                                        <td>
+                                            <% if user != current_user%>
+                                                <%= user.name -%>
+                                            <%else%>
+                                                You
+                                            <% end  %>
+                                        </td>
+                                        <td><%= check_box_tag 'deleteuser[]', user.id -%></td>
+                                    </tr>
+                                <% end %> 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        
+        <%= hidden_field_tag "id", @gathering.id %>
+        <%= submit_tag "Edit locations", class:"btn btn-danger"%>
+    <% end %>

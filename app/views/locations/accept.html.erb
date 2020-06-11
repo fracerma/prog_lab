@@ -1,9 +1,10 @@
 <div class="image_cover">
     <%= image_tag  "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Casa_Classic_Cocktail_Bar_%26_Jazz_Club_by_Roland_Barrera.jpg/1280px-Casa_Classic_Cocktail_Bar_%26_Jazz_Club_by_Roland_Barrera.jpg" %>
 </div>
-<div class="locations">
+<div class="table-scroll">
   <div class="title"><h1>Accept Locations</h1> </div>
   <%= form_tag '/accept', :action => 'accept_locations', :method =>'POST' do %>
+  <div class="table-conteiner">
     <% if !@list.empty? %>
       <table class="table">
           <thead>
@@ -25,6 +26,7 @@
               <% end %>
           </tbody>
       </table>
+    </div>
     <% else %>
       There aren't locations to accept
     <%end%>

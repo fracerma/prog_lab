@@ -1,16 +1,12 @@
-<br>
-<h1> CREA UNA NUOVA CATEGORIA: </h1>
-<br>
-<%= form_tag :action => 'create' do %>
+<div class="image_cover">
+    <%= image_tag  "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Casa_Classic_Cocktail_Bar_%26_Jazz_Club_by_Roland_Barrera.jpg/1280px-Casa_Classic_Cocktail_Bar_%26_Jazz_Club_by_Roland_Barrera.jpg" %>
+</div>
 
-<p><label for = "name">Nome categoria</label>:
-<%= text_field 'categories', 'name' %></p>
-
-
-
-
-<%= submit_tag "Crea" %>
-
-<% end -%>
-<br>
-<%= link_to 'Back', {:action => 'index'} %>
+<div class="table-scroll">
+    <h1> Create a new Category: </h1>
+    <%= form_tag :action => 'create' do %>
+        <p><label for = "name">Name: </label>
+        <%= text_field 'categories', 'name' %></p>
+        <%= submit_tag "Create", class: "btn btn-danger" %>
+    <% end -%>
+</div>
