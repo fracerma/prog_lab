@@ -19,7 +19,7 @@
     <% @categories.each do |cat| %>
       <tr>
         <% if current_user.is_user? %>      
-          <td><%= check_box_tag 'categ[]', cat.id %></td>   
+          <td><%= check_box_tag "categ[#{cat.id}]", cat.id %></td>   
        <%end%>   
         <td><%=  cat.name -%>&nbsp;</td>
         <td><%= link_to "Show", cat %>&nbsp; </td>

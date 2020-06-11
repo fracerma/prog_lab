@@ -131,7 +131,8 @@ class LocationsController < ApplicationController
             if @accept != nil 
                 @accept.each do |al|
                     @a = Location.find(al)
-                    @a.update_attributes(status: "accepted")
+                    #render html: @a
+                    @a[0].update_attributes(status: "accepted")
                 end
             end
         end
