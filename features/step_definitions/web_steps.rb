@@ -195,6 +195,8 @@ Then /^(?:|I )should see "([^"]*)"$/ do |text|
     page.should have_content(text)
   else
     assert page.has_content?(text)
+  end
+end
 
 Then /^(?:|I )should see "([^"]*)" and "([^"]*)"$/ do |text1, text2|
   if page.respond_to? :should
@@ -204,6 +206,7 @@ Then /^(?:|I )should see "([^"]*)" and "([^"]*)"$/ do |text1, text2|
     assert page.has_content?(text1)
     assert page.has_content?(text2)
   end
+end
 
 
 Then /^(?:|I )should see \/([^\/]*)\/$/ do |regexp|
