@@ -45,7 +45,6 @@ module NavigationHelpers
     when /^the login page/
       '/users/sign_in'
     when /^Favourite Categories page/
-      #'/categories/users/fav_categories'
       '/categories'
     when /^Choose Your Favourite Categories page/
       '/categories'

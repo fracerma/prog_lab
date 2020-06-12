@@ -8,7 +8,7 @@ class CategoriesController < ApplicationController
     end
 
     def create # /categories
-        @category = Category.new
+        @category = Category.new(params.require(:categories).permit(:name))
         authorize! :create, @category, :message=>"You are not authorized to complete this action."
         @category.save
         redirect_to categories_path
