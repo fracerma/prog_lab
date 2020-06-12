@@ -20,7 +20,7 @@
                       <td><%= loc.name %></td>
                       <td><%= loc.long %></td>
                       <td><%= loc.lat %> &nbsp;</td>
-                      <td><%= check_box_tag 'accepted[]', loc.id -%><td>
+                      <td><%= check_box_tag "accepted[#{loc.id}]", loc.id -%><td>
                       <td><%= link_to "Show", location_path(loc.id) %>&nbsp;</td>
                   </tr>
               <% end %>
