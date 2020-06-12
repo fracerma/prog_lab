@@ -71,7 +71,6 @@ gem 'canard', '~> 0.5.0.pre'
 # devise manages authentication via OAuth (facebook) through this special module/gem: 
 gem 'omniauth-facebook'
 
-
 #per i test:
 group :test do
   gem 'cucumber-rails', :require => false
@@ -79,6 +78,5 @@ group :test do
   gem 'database_cleaner'
   gem 'capybara'
   gem 'launchy'
-  gem 'factory_bot_rails'
-  gem 'rspec-rails'
+  gem 'rails-controller-testing'
 end

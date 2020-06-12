@@ -5,7 +5,7 @@ FactoryBot.define do
     sequence :name do |n|
         "person#{n}"
     end
-    factory :user do |n|
+    factory :user do 
       name 
       email 
       roles_mask {1}
