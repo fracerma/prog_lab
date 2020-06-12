@@ -7,12 +7,12 @@ PIANO DEI TEST:
     1. Modello Location 
     2. Modello Category 
   
-  Test sui controller:
+  Test funzionali:
     1. Controller Location 
     2. Controller Category 
     3. Controller Gathering
   
-  Test User Stories: 
+  Test di integrazione: 
     1. Accettazione/Rifiuto di un locale (da parte di un Admin) 
     2. Scelta categorie preferite (da parte di uno user)
     3. Aggiungi locale ai preferiti (da parte di uno user)
