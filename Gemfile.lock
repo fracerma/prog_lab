@@ -234,10 +234,6 @@ GEM
       actionpack (>= 5.0)
       railties (>= 5.0)
     role_model (0.8.2)
-    rspec (3.9.0)
-      rspec-core (~> 3.9.0)
-      rspec-expectations (~> 3.9.0)
-      rspec-mocks (~> 3.9.0)
     rspec-core (3.9.2)
       rspec-support (~> 3.9.3)
     rspec-expectations (3.9.2)
@@ -336,7 +332,6 @@ DEPENDENCIES
   puma (~> 3.11)
   rails (~> 5.2.4, >= 5.2.4.2)
   rails-controller-testing
-  rspec
   rspec-rails
   sass-rails (~> 5.0)
   turbolinks (~> 5)
