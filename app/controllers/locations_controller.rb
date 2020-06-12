@@ -1,5 +1,6 @@
 class LocationsController < ApplicationController
     before_action :authenticate_user!
+    load_and_authorize_resource
     def index_admin
         if current_user.is_admin?
             @locat = Location.all
@@ -119,9 +120,6 @@ class LocationsController < ApplicationController
     end
 
     def accept
-        if !current_user.is_admin?
-            redirect_to locations_path
-        end
         @list = Location.where(status: "pending")
         @noList = "Non ci sono locali da accettare"
     end
