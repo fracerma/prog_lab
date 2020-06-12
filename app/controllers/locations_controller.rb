@@ -107,11 +107,13 @@ class LocationsController < ApplicationController
         else  
             @update_loc.update_attributes(name: params[:locations][:name], foto: params[:locations][:foto])
             @allCats = params[:categ]
-            @tmp = []
-            @allCats.each do |c|
-                @tmp.append(Category.find(c))
+            if @allCats != nil
+                @tmp = []
+                @allCats.each do |c|
+                    @tmp.append(Category.find(c))
+                end
+                @update_loc.categories = @tmp
             end
-            @update_loc.categories = @tmp
         end  
         redirect_to location_path(@update_loc)
     end
