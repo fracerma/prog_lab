@@ -70,9 +70,11 @@ gem 'canard', '~> 0.5.0.pre'
 gem 'omniauth-facebook'
 
 group :test do
+  gem 'factory_bot_rails'
   gem 'cucumber-rails', :require => false
   gem 'cucumber-rails-training-wheels'
   gem 'database_cleaner'
   gem 'capybara'
   gem 'launchy'
+  gem 'rspec-rails'
 end
