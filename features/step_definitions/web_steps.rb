@@ -30,7 +30,7 @@ module WithinHelpers
   end
 end
 World(WithinHelpers)
-Given /^a valid user$/ do 
+Given /^a valid admin$/ do 
   @user= User.create!({
     :name => "test",
     :email => "test@gmail.com",
@@ -40,7 +40,7 @@ Given /^a valid user$/ do
   })
 end
 
-Given /^a valid location$/ do 
+Given /^a valid pending location$/ do 
   @locs= Location.create!({
     :name => "testLoc",
     :long => 1,
@@ -50,6 +50,96 @@ Given /^a valid location$/ do
     :user_id => @user.id
   })
 end
+
+
+Given /^a valid user$/ do
+  @user = User.create!({
+            :name=> "Tester",
+            :email => "test@hotmail.com",
+            :password => "Tester12!",
+            :password_confirmation => "Tester12!",
+            :roles_mask=> 1
+           })
+  @friend = User.create!({
+            :name=> "Friend",
+            :email => "friend@hotmail.com",
+            :password => "Friend12!",
+            :password_confirmation => "Friend12!",
+            :roles_mask=> 1
+           })
+  @categoryright = Category.create!({
+            :name => "pub"
+  })
+  @categorywrong = Category.create!({
+            :name => "cocktail bar"
+  })
+  @friend.categories << @categoryright
+  @user.categories << @categoryright
+end
+Given /^a valid location$/ do
+  @location = Location.create!({
+            :name=> "testloc",
+            :long=> 12.442535,
+            :lat=>41.934373,
+            :street=> "Via Luigi Credaro, Roma",
+            :status=>"accepted",
+            :user_id=>@user.id
+           })
+  @location.categories << @categoryright
+  @locationwrong = Location.create!({
+            :name=> "testlocwrong",
+            :long=> 12.442536,
+            :lat=>41.934376,
+            :street=> "Via San Godenzo, Roma",
+            :status=>"accepted",
+            :user_id=>@user.id
+           })
+  @locationwrong.categories << @categorywrong
+end
+
+Given /^a logged in user$/ do
+  Given "a valid user"
+  visit signin_url
+  fill_in "Email", :with => "test@hotmail.com"
+  fill_in "Password", :with => "12345678"
+  click_button "Login"
+end
+
+
+When /^(?:|I )touch heart$/ do
+  find('#heart').click
+end
+
+When /^I have added a friend$/ do
+  @user.friends << @friend
+end
+
+
+  Given /^a category$/ do 
+  @c1 = Category.create!({
+  :name => "Pizzeria"
+  })
+  end 
+
+  Given /^another category/ do 
+    @c2 = Category.create!({
+      :name => "Disco"
+      })
+  end 
+  
+  Given /^a third category/ do 
+    @c3 = Category.create!({
+      :name => "Japanese Restaurant"
+      })
+  end
+
+  When /^(?:|I )check a first "([^"]*)"$/ do |field|
+  check(field + @c1.id.to_s)
+  end
+
+  And /^(?:|I )check also "([^"]*)"$/ do |field|
+  check(field + @c2.id.to_s)
+  end
 
 # Single-line step scoper
 When /^(.*) within (.*[^:])$/ do |step, parent|
@@ -93,9 +183,6 @@ end
 #     | Note           | Nice guy   |
 #     | Wants Email?   |            |
 #
-# TODO: Add support for checkbox, select or option
-# based on naming conventions.
-#
 When /^(?:|I )fill in the following:$/ do |fields|
   fields.rows_hash.each do |name, value|
     When %{I fill in "#{name}" with "#{value}"}
@@ -107,6 +194,10 @@ When /^(?:|I )select "([^"]*)" from "([^"]*)"$/ do |value, field|
 end
 
 When /^(?:|I )check "([^"]*)"$/ do |field|
+  check(field)
+end
+
+When /^(?:|I )checkLoc "([^"]*)"$/ do |field|
   check(field + @locs.id.to_s)
 end
 
@@ -129,6 +220,17 @@ Then /^(?:|I )should see "([^"]*)"$/ do |text|
     assert page.has_content?(text)
   end
 end
+
+Then /^(?:|I )should see "([^"]*)" and "([^"]*)"$/ do |text1, text2|
+  if page.respond_to? :should
+    page.should have_content(text1)
+    page.should have_content(text2)
+  else
+    assert page.has_content?(text1)
+    assert page.has_content?(text2)
+  end
+end
+
 
 Then /^(?:|I )should see \/([^\/]*)\/$/ do |regexp|
   regexp = Regexp.new(regexp)

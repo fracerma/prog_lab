@@ -3,7 +3,7 @@ Feature: Accept new Locations
 
     Scenario: New Locations to Accept
         
-        Given a valid user
+        Given a valid admin
         When I am on the login page 
         And I fill in "user_email" with "test@gmail.com" 
         And I fill in "user_password" with "Test123!" 
@@ -11,11 +11,11 @@ Feature: Accept new Locations
         Then I should be on admin homepage
 
         Given I am on admin homepage
-        Given a valid location
+        And a valid pending location
         When I follow "Accept"
         Then I should be on the accept page
 
-        When I check "accepted_"
+        When I checkLoc "accepted_"
         And I press "Confirm"
-        Then I should be on index_admin
+        Then I should be on locations
         

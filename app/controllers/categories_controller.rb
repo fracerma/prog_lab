@@ -42,7 +42,6 @@ class CategoriesController < ApplicationController
                 current_user.categories = @fav_cats
             end 
             current_user.save
-            #redirect_to create_fav_categories_path 
         else 
             redirect_to root_path 
         end

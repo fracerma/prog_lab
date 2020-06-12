@@ -1,48 +1,34 @@
 require 'rails_helper.rb'
 
-describe LocationsController do
-	describe "GET locations#accept" do
-		context "when the user is an admin" do
-			it "shows the pending locations" do
-				#admin = create(:user)
-				location = create(:location)
-				get :accept
-				expect(location.status).to eq ("pending")
+
+	RSpec.describe LocationsController, :type => :controller do
+		describe "POST locations#accept_locations" do
+			before(:each) do
+				@request.env["devise.mapping"] = Devise.mappings[:user]
+				admin = FactoryBot.create(:admin)
+				sign_in admin
+				allow(Location).to receive_message_chain(:search_match).and_return("test_location")
+				#controller.stub(:search_match).and_return(["test_location"]) DEPRECATED
+			end
+
+			context "when the user is an admin" do
+					it "shows the pending locations" do
+						get :accept
+						expect(response.status).to  eql(200)
+					end
+					
+					it "and deny all" do
+						post "accept_locations", params: {accepted: []}
+						expect(response.status).to eq (302)
+					end
+					it "and accept the selected ones" do
+						location = FactoryBot.create(:location_pending)
+						post :accept_locations, params: {:accepted => [[location.id]]}
+					 	expect(response.status).to eq (302)
+					end
 			end
 		end
+	
 	end
-	#describe ".accept_location" do
-	#	context "I click on confirm" do
-	#		it "accepts the locations" do
-	#			#location = create(:location)
-	#			post :accept_location, params: {accepted: location.id}
-	#			expect(location.status).to eq ("accepted")
-	#		end
-	#	end
-	#end
-end
 
-# describe "GET stories#index" do
-#   context "when the user is an admin" do
-#     it "should list titles of all stories" do
-#       admin = create(:admin)
-#       stories = create_list(:story, 10, user: admin)
-#       login_as(admin, scope: :user)
-#       visit stories_path
-#       stories.each do |story|
-#         page.should have_content(story.title)
-#       end
-#     end
-#   end
-#   context "when the user is not an admin" do
-#     it "should list titles of users own stories" do
-#       user = create(:user)
-#       stories = create_list(:story, 10, user: user)
-#       login_as(user, scope: :user)
-#       visit stories_path
-#       stories.each do |story|
-#         page.should have_content(story.title)
-#       end
-#     end
-#   end
-# end
+

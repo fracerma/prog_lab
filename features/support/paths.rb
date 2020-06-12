@@ -21,12 +21,38 @@ module NavigationHelpers
     when /^accept page/
       '/accept'
     
-    when /^index_admin/
-      '/index_admin'
+    when /^locations/
+      '/locations'
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
+      
+    when /^the home\s?page$/
+      '/'
+    when /^the locations page$/
+      '/locations'
+    when /^the location page$/
+      '/locations/'+ @location.id.to_s
+    when /^the index_favloc page$/
+      '/users/locations'
+    when /^the new gathering page$/
+      '/gatherings/new'
+    when /^the matching locations page$/
+      '/gatherings/new/generate_locations'
+    when /^my profile page/
+      '/user'
+    when /^the login page/
+      '/users/sign_in'
+    when /^Favourite Categories page/
+      #'/categories/users/fav_categories'
+      '/categories'
+    when /^Choose Your Favourite Categories page/
+      '/categories'
+
+
+    # Add more mappings here.
+    # Here is an example that pulls values out of the Regexp:
     #   when /^(.*)'s profile page$/i
     #     user_profile_path(User.find_by_login($1))
 
