@@ -41,7 +41,7 @@ class LocationsController < ApplicationController
     end 
 
     def create
-        if  !Location.where(name: params[:locations][:name], name: params[:locations][:lat], name: params[:locations][:long] ).empty?
+        if  !Location.where(name: params[:locations][:name], lat: params[:locations][:lat], long: params[:locations][:long] ).empty?
             render html: "Il locale che stai cercango di aggiungere gia' esiste"
             
         else 

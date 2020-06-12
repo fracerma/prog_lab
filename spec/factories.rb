@@ -3,7 +3,7 @@ FactoryBot.define do
         "person#{n}@example.com"
     end
     sequence :name do |n|
-        "person#{n}"
+        "Name#{n}"
     end
     factory :user do 
       name 
@@ -19,7 +19,7 @@ FactoryBot.define do
       end
      end
     factory :location do
-        name {"test"}
+        name 
         user
         street {"test"}
         lat {1}
@@ -32,7 +32,7 @@ FactoryBot.define do
       end
     end
     factory :category do
-        name {"ciao"}
+        name 
     end
 
   end

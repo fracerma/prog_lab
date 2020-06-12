@@ -16,8 +16,3 @@ Feature: Matching Location
         Then I should be on the matching locations page
         And I should see "testloc"
         And I should not see "testlocwrong"
-
-        
-   
-        
-
