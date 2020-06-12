@@ -30,6 +30,7 @@ module WithinHelpers
   end
 end
 World(WithinHelpers)
+
 Given /^a valid admin$/ do 
   @user= User.create!({
     :name => "test",

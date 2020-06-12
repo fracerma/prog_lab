@@ -8,7 +8,7 @@ class CategoriesController < ApplicationController
     end
 
     def create # /categories
-        @category = Category.new
+        @category = Category.new(params.require(:categories).permit(:name))
         authorize! :create, @category, :message=>"You are not authorized to complete this action."
         @category.save
         redirect_to categories_path
@@ -26,6 +26,13 @@ class CategoriesController < ApplicationController
         @locs = @current_category.locations
     end
 
+    def fav_categories 
+        if current_user.is_user?
+
+        else redirect_to root_path
+
+        end
+    end
 
     def create_fav_categories
         if current_user.is_user?
@@ -44,8 +51,9 @@ class CategoriesController < ApplicationController
                 flash[:alert]="Choose some favourite categories!!"
             end 
             current_user.save
+            redirect_to fav_categories_path
         else 
-            redirect_to root_path 
+            redirect_to root_path
         end
     end
 

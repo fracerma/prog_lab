@@ -11,7 +11,7 @@
             <% end %>
         </div>
         <div>
-            <strong>Nome:</strong> <%= current_user.name %> 
+            <strong>Name:</strong> <%= current_user.name %> 
             <br>
             <strong>Email:</strong> <%= current_user.email %>
             <br>
@@ -37,20 +37,19 @@
         <div class="friend_section">
             <div class="user_add">
                 <h1> Your friends</h1>
-                <h5> <cite>Good friends know the exact number of drinks  you can handle before you makes poor choices. </cite>&#x1F609</h5>
+                <h5> <cite>Good friends know the exact number of drinks you can handle before you make poor choices. </cite>&#x1F609</h5>
                 <%= link_to  "View friends", user_friends_path, class: "btn btn-warning" %>
             </div>
             <div class="user_add">
                 <h1> Add new friends</h1>
-                <h5> <cite>A new friend is a new wine, when it grows old you will enjoy drinking it </cite>&#x1F44D</h5>
+                <h5> <cite>Good friends know the exact number of drinks you can handle before you make poor choices. </cite>&#x1F609</h5>
                 <%= link_to  "Find friends", users_all_path, class: "btn btn-secondary" %>
             </div>
              <div class="user_add">
-                <h1> Your favourites Categories</h1>
-                <h5> <cite>The hangover only lasts a day, but the memories last a lifetime</cite>&#x1F609</h5>
-                <%= link_to "Your Favourite Categories", fav_categories_path, class: "btn btn-primary" %>
-                <%= link_to "Choose Your Favourite Categories", categories_path, class: "btn btn-primary" %>             
-            </div>
+                    <h1> Your favourite Categories</h1>
+                    <h5> <cite>Good friends know the exact number of drinks you can handle before you make poor choices. </cite>&#x1F609</h5>
+                    <%= link_to "Your Favourite Categories", fav_categories_path, class: "btn btn-primary" %>
+                    <%= link_to "Choose Your Favourite Categories", categories_path, class: "btn btn-primary" %>             </div>
         </div>
     <% end %>
     </div>

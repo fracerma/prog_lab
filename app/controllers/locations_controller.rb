@@ -1,5 +1,6 @@
 class LocationsController < ApplicationController
     before_action :authenticate_user!
+    load_and_authorize_resource
     def index_admin
         if current_user.is_admin?
             @locat = Location.all
@@ -77,10 +78,6 @@ class LocationsController < ApplicationController
          end
     end
 
-    #Manca autenticazione admin
-    #Devi passare un array che contiene l-id di location e l-id di category 
-    #cosi lo cerchi dentro type e se non esiste la categoria indicata dentro type,  vuol dire 
-    #che il locale indicato non gli appartiene e quindi aggiungi la tupla. 
     def edit   
         @update_loc = Location.find(params[:id])
         authorize! :update, @update_loc, :message=>"You are not authorized to complete this action."
@@ -89,7 +86,6 @@ class LocationsController < ApplicationController
         @status_array = ["accepted", "pending", "rejected"]
     end 
 
-    #Manca autenticazione admin
     def destroy 
             id = params[:id]
             @location = Location.find(id) 
@@ -98,7 +94,6 @@ class LocationsController < ApplicationController
             redirect_to locations_path
     end
 
-    #Manca autenticazione admin
     def update
         @update_loc = Location.where(id: params[:id]).first
         authorize! :update, @update_loc, :message=>"You are not authorized to complete this action."
@@ -108,19 +103,17 @@ class LocationsController < ApplicationController
         else  
             @update_loc.update_attributes(name: params[:locations][:name], foto: params[:locations][:foto])
             @allCats = params[:categ]
-            @tmp = []
-            @allCats.each do |c|
-                @tmp.append(Category.find(c))
+            if @allCats != nil
+                @tmp = []
+                @allCats.each do |c|
+                    @tmp.append(Category.find(c))
+                end
+                @update_loc.categories = @tmp
             end
-            @update_loc.categories = @tmp
-            redirect_to location_path(@update_loc)
         end  
     end
 
     def accept
-        if !current_user.is_admin?
-            redirect_to locations_path
-        end
         @list = Location.where(status: "pending")
         @noList = "Non ci sono locali da accettare"
     end

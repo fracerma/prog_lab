@@ -5,14 +5,14 @@
 <div class="table-scroll">
     <h2> Your favourites categories: </h2>
     <div class="table-conteiner">
-        <% if !@current_user.categories.empty? %>
+        <% if !current_user.categories.empty? %>
         <table class="table">
             <thead>
             </thead>
             
             <tbody>
                 
-                <% @current_user.categories.each do |cat| %>  
+                <% current_user.categories.each do |cat| %>  
                     <tr>   
                         <td><%=  cat.name -%>&nbsp;</td>
                         <td><%= link_to "Show", cat %>&nbsp; </td> 
