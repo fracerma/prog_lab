@@ -14,12 +14,12 @@ FactoryBot.define do
       factory :user_with_categories do
         association :categories
       end
-      factory :admin do 
+      factory :admin do
         roles_mask {4}
       end
-    end
+     end
     factory :location do
-        name {""}
+        name {"test"}
         user
         street {"test"}
         lat {1}
@@ -27,8 +27,12 @@ FactoryBot.define do
         factory :location_with_categories do
             association :categories
         end
+        factory :location_pending do
+          status {"pending"}
+      end
     end
     factory :category do
         name {"ciao"}
     end
+
   end
