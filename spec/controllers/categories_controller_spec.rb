@@ -25,7 +25,7 @@ RSpec.describe CategoriesController, :type => :controller do
             end
 
             context "having valid params" do 
-                valid_params = {:name => "ciao"}
+                valid_params = {:categories=> {:name => "ciao"}}
                 it "POST categories#create -> admin create a new category" do 
                     admin = FactoryBot.create(:admin)
                     sign_in admin
