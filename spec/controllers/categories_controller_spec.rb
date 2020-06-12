@@ -39,7 +39,7 @@ RSpec.describe CategoriesController, :type => :controller do
                 valid_params = {:checkbox => ""}
                 it "schould returns the array of favourites categories empty" do 
                     post :create_fav_categories,:params => valid_params                    
-                    expect(response.status).to eql(200)
+                    expect(response.status).to eql(302)
                     expect(flash[:alert]).to match(/Choose some favourite categories!!*/)
                 end 
             end
