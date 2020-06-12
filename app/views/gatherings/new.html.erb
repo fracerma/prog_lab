@@ -4,6 +4,11 @@
 <div class="table-scroll">
     <h1> Create a new Gathering </h1>
     <%= form_tag :action => 'generate_locations' do %>
+            <% flash.each do |type, msg| %>
+                <div class="alert alert-info">
+                    <%= msg %>
+                </div>                
+            <% end %>
             <p>
                 <h5> Choose the date: <h5>
                 <%= date_field  :date, nil, value:Date.today%>

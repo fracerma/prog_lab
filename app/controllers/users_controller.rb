@@ -16,7 +16,13 @@ class UsersController < ApplicationController
     end
 
     def index_users
-        @users= User.where.not(id: current_user.friends) #TODO fai vedere solo quelli con ruolo user
+        if current_user.is_user?
+            @users= User.where.not(id: current_user.friends).where(roles_mask: 1) #TODO fai vedere solo quelli con ruolo user
+        elsif current_user.is_admin?
+            @users= User.all
+        else  
+            redirect_to root_path
+        end
     end
     
     def add_friend

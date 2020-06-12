@@ -104,6 +104,7 @@ class LocationsController < ApplicationController
         authorize! :update, @update_loc, :message=>"You are not authorized to complete this action."
         if current_user.is_admin?
             @update_loc.update_attributes(status: params[:status])
+            redirect_to locations_path
         else  
             @update_loc.update_attributes(name: params[:locations][:name], foto: params[:locations][:foto])
             @allCats = params[:categ]
@@ -112,8 +113,8 @@ class LocationsController < ApplicationController
                 @tmp.append(Category.find(c))
             end
             @update_loc.categories = @tmp
+            redirect_to location_path(@update_loc)
         end  
-        redirect_to location_path(@update_loc)
     end
 
     def accept

@@ -5,6 +5,11 @@
 <div class="table-scroll">
     <h1>Matching Locations: </h1>
     <%= form_tag gatherings_path(), method: 'POST' do %>
+     <% flash.each do |type, msg| %>
+    <div class="alert alert-info">
+        <%= msg %>
+    </div>                
+    <% end %>
     <div class="table-conteiner">
         <table class="table">
         <thead>
