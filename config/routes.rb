@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   
   resources :categories
 
-  get '/categories/users/fav_categories', to:'categories#create_fav_categories', as: 'fav_categories'
+  get '/categories/users/fav_categories', to:'categories#fav_categories', as: 'fav_categories'
   post '/categories/users/fav_categories', to:'categories#create_fav_categories', as: 'create_fav_categories'
 
   resources :locations
