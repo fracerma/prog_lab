@@ -30,6 +30,27 @@ module WithinHelpers
   end
 end
 World(WithinHelpers)
+Given /^a valid admin$/ do 
+  @user= User.create!({
+    :name => "test",
+    :email => "test@gmail.com",
+    :password => "Test123!",
+    :password_confirmation => "Test123!",
+    :roles_mask => 4
+  })
+end
+
+Given /^a valid pending location$/ do 
+  @locs= Location.create!({
+    :name => "testLoc",
+    :long => 1,
+    :lat => 2,
+    :street => "Via test 1",
+    :status => "pending",
+    :user_id => @user.id
+  })
+end
+
 
 Given /^a valid user$/ do
   @user = User.create!({
@@ -162,7 +183,6 @@ end
 #     | Note           | Nice guy   |
 #     | Wants Email?   |            |
 #
-
 When /^(?:|I )fill in the following:$/ do |fields|
   fields.rows_hash.each do |name, value|
     When %{I fill in "#{name}" with "#{value}"}
@@ -177,6 +197,10 @@ When /^(?:|I )check "([^"]*)"$/ do |field|
   check(field)
 end
 
+When /^(?:|I )checkLoc "([^"]*)"$/ do |field|
+  check(field + @locs.id.to_s)
+end
+
 When /^(?:|I )uncheck "([^"]*)"$/ do |field|
   uncheck(field)
 end
@@ -188,7 +212,6 @@ end
 When /^(?:|I )attach the file "([^"]*)" to "([^"]*)"$/ do |path, field|
   attach_file(field, File.expand_path(path))
 end
-
 
 Then /^(?:|I )should see "([^"]*)"$/ do |text|
   if page.respond_to? :should

@@ -1,5 +1,28 @@
 require 'rails_helper'
+
 RSpec.describe Location, :type => :model do
+    location = FactoryBot.create(:location_pending)
+    describe "a new location" do
+        it "is valid with valid attributes" do
+            expect(location).to be_valid
+        end
+        it "is not valid without a name" do
+            location.name = nil 
+            expect(location).to_not be_valid
+        end 
+        it "is not valid without a street" do
+            location.street = nil 
+            expect(location).to_not be_valid
+        end
+        it "is not valid without a longitude" do
+            location.long = nil 
+            expect(location).to_not be_valid 
+        end
+        it "is not valid without a latitude" do 
+            location.lat = nil 
+            expect(location).to_not be_valid
+        end
+    end
     describe "search_match" do
         before(:each) do
             @categories=[]

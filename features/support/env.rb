@@ -29,9 +29,12 @@ require 'cucumber/rails'
 # recommended as it will mask a lot of errors for you!
 #
 ActionController::Base.allow_rescue = false
-
+#Capybara.ignore_hidden_elements = false
 # Remove/comment out the lines below if your app doesn't have a database.
 # For some databases (like MongoDB and CouchDB) you may need to use :truncation instead.
+Capybara.register_driver :selenium_chrome do |app|
+  Capybara::Selenium::Driver.new(app, :browser => :chrome)
+end
 begin
   DatabaseCleaner.strategy = :transaction
 rescue NameError
