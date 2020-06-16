@@ -14,9 +14,7 @@ class Location < ApplicationRecord
         locations = Location.all
         matching_loc = []
         index_loc = 0
-        
         locations.each do |loc|
-            
             user_ok=Array.new(partecipants.length, 0)
             loc.categories.each do |cat|
                 index_user = 0

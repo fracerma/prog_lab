@@ -97,7 +97,7 @@ class GatheringsController < ApplicationController
             destroy()
         else
             @locations = Location.all
-            @matching_loc = search_match(@partecipants)
+            @matching_loc = Location.search_match(@partecipants)
             @date =  params[:gathering][:date]
         end
     end
